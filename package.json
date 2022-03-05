@@ -1,0 +1,34 @@
+{
+  "name": "galleon-discord-bots",
+  "version": "1.0.0",
+  "description": "Galleon Discord Bots",
+  "main": "bots/dbl-price.js",
+  "scripts": {
+    "start:dbl": "node bots/dbl-price.js",
+    "dev:dbl": "nodemon bots/dbl-price.js"
+  },
+  "keywords": [
+    "discord",
+    "token",
+    "coingecko",
+    "crypto"
+  ],
+  "author": "Galleon DAO",
+  "license": "MIT",
+  "dependencies": {
+    "@netlify/functions": "^1.0.0",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.3",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
+  }
+}

@@ -11,7 +11,7 @@ client.on('ready', () =>
 )
 
 const task = async () => {
-  const data = await fetchData()
+  const data = await fetchData('doubloon')
 
   if (!data) return
 

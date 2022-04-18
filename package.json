@@ -1,11 +1,12 @@
 {
   "name": "galleon-discord-bots",
   "version": "1.0.0",
-  "description": "Galleon Discord Bots",
-  "main": "bots/dbl-price.js",
+  "description": "Galleon Public Discord Bots",
   "scripts": {
-    "start:dbl": "node bots/dbl-price.js",
-    "dev:dbl": "nodemon bots/dbl-price.js"
+    "start:dbl": "node bots/dbl.js",
+    "dev:dbl": "nodemon bots/dbl.js",
+    "start:ethmaxy": "node bots/ethmaxy.js",
+    "dev:ethmaxy": "nodemon bots/ethmaxy.js"
   },
   "keywords": [
     "discord",
@@ -16,7 +17,6 @@
   "author": "Galleon DAO",
   "license": "MIT",
   "dependencies": {
-    "@netlify/functions": "^1.0.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.3",

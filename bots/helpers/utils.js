@@ -1,11 +1,9 @@
 const fetch = require('node-fetch')
 
-module.exports.fetchData = async () => {
+module.exports.fetchData = async (tokenId) => {
   try {
     const tokenData = await (
-      await fetch(
-        `https://api.coingecko.com/api/v3/coins/${process.env.TOKEN_ID}`,
-      )
+      await fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`)
     ).json()
 
     const price = tokenData.market_data.current_price.usd

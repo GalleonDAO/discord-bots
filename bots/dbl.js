@@ -5,7 +5,7 @@ const { fetchData, numberWithCommas } = require('./helpers/utils')
 dotenv.config()
 
 let client = new Client()
-client.login(process.env.DISCORD_API_TOKEN)
+client.login(process.env.DISCORD_API_TOKEN_DBL)
 client.on('ready', () =>
   console.log(`Bot successfully started as ${client.user.tag} 🤖`),
 )

@@ -1,12 +1,10 @@
 {
-  "name": "galleon-discord-bots",
+  "name": "galleon-ethmaxy-pricebots",
   "version": "1.0.0",
-  "description": "Galleon Public Discord Bots",
+  "description": "Galleon Public Discord Bots for ETHMAXY Prices",
   "scripts": {
-    "start:dbl": "node bots/dbl.js",
-    "dev:dbl": "nodemon bots/dbl.js",
-    "start:ethmaxy": "node bots/ethmaxy.js",
-    "dev:ethmaxy": "nodemon bots/ethmaxy.js"
+    "start": "node src/ethmaxy.js",
+    "dev": "nodemon src/ethmaxy.js"
   },
   "keywords": [
     "discord",
@@ -14,7 +12,7 @@
     "coingecko",
     "crypto"
   ],
-  "author": "Galleon DAO",
+  "author": "Galleon",
   "license": "MIT",
   "dependencies": {
     "discord.js": "^12.5.1",

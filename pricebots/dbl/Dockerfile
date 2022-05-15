@@ -7,5 +7,4 @@ RUN npm install --production --silent && mv node_modules ../
 COPY ["/src", "."]
 
 EXPOSE 80
-ENTRYPOINT ["sh", "-c"]
-CMD ["node", "dbl-usd.js"]
+CMD ["node", "dbl.js"]

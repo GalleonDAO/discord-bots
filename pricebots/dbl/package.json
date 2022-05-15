@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Galleon Public Discord Bots for Doubloon Prices",
   "scripts": {
-    "start:dbl-usd": "node src/dbl-usd.js",
-    "dev:dbl-usd": "nodemon src/dbl-usd.js"
+    "start": "node src/dbl.js",
+    "dev": "nodemon src/dbl.js"
   },
   "keywords": [
     "discord",

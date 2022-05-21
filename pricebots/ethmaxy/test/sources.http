@@ -1,0 +1,11 @@
+@coingecko_url = https://api.coingecko.com/api/v3/
+@tokensets_url = https://api.tokensets.com/v2/
+
+@congecko_tokenId = eth-max-yield-index
+@tokensets_tokenId = ethmaxy
+
+### @name Coingecko_Ethmaxy
+GET {{coingecko_url}}/coins/{{congecko_tokenId}}
+
+### @name TokenSets_Ethmaxy
+GET {{tokensets_url}}/funds/{{tokensets_tokenId}}

@@ -1,6 +1,6 @@
 const { Client } = require('discord.js')
 const dotenv = require('dotenv')
-const { fetchData, numberWithCommas, fetchCoingeckoData, fetchTokensetsData } = require('./helpers/utils')
+const { numberWithCommas, fetchCoingeckoData, fetchTokensetsData } = require('./helpers/utils')
 
 const COINGECKO_TOKENID = 'eth-max-yield-index'
 const TOKENSETS_TOKENID = 'ethmaxy'

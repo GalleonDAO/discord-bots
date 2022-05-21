@@ -1,12 +1,12 @@
 const fetch = require('node-fetch')
 
-const CONGECKO_URL = 'https://api.coingecko.com/api/v3/coins'
+const COINGECKO_URL = 'https://api.coingecko.com/api/v3/coins'
 const TOKENSETS_URL = 'https://api.tokensets.com/v2/funds'
 
 module.exports.fetchCoingeckoData = async (tokenId) => {
   try {
     const tokenData = await (
-      await fetch(`${CONGECKO_URL}/${tokenId}`)
+      await fetch(`${COINGECKO_URL}/${tokenId}`)
     ).json()
 
     //unused but kept for future

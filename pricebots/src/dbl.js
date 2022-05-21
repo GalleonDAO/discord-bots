@@ -8,9 +8,11 @@ const dotenv           = require('dotenv')
 const COINGECKO_TOKENID = 'doubloon'
 
 dotenv.config()
+//Allow token to be supplied as DISCORD_API_TOKEN_DBL or DISCORD_API_TOKEN for ease of use
+const DISCORD_API_TOKEN = !process.env.DISCORD_API_TOKEN_DBL ? process.env.DISCORD_API_TOKEN : process.env.DISCORD_API_TOKEN_DBL
 
 let client = new Client()
-client.login(process.env.DISCORD_API_TOKEN_DBL)
+client.login(DISCORD_API_TOKEN)
 client.on('ready', () => {
   console.log(`Bot successfully started as ${client.user.tag} 🤖`)
 

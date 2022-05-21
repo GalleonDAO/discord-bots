@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  doubloon:
+    container_name: dbl
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TOKEN: dbl
+      NODE_ENV: production
+      DISCORD_API_TOKEN: {YOUR TOKEN GOES HERE}
+    ports:
+      - 8081:80
+
+  ethmaxy:
+    container_name: ethmaxy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TOKEN: ethmaxy
+      NODE_ENV: production
+      DISCORD_API_TOKEN: {YOUR TOKEN GOES HERE}
+    ports:
+      - 8082:80

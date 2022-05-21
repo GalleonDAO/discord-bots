@@ -10,9 +10,11 @@ const COINGECKO_TOKENID = 'eth-max-yield-index'
 const TOKENSETS_TOKENID = 'ethmaxy'
 
 dotenv.config()
+//Allow token to be supplied as DISCORD_API_TOKEN_ETHMAXY or DISCORD_API_TOKEN for ease of use
+const DISCORD_API_TOKEN = !process.env.DISCORD_API_TOKEN_ETHMAXY ? process.env.DISCORD_API_TOKEN : process.env.DISCORD_API_TOKEN_ETHMAXY
 
 let client = new Client()
-client.login(process.env.DISCORD_API_TOKEN_ETHMAXY)
+client.login(DISCORD_API_TOKEN)
 client.on('ready', () => {
   console.log(`Bot successfully started as ${client.user.tag} 🤖`)
   //Get price on launch

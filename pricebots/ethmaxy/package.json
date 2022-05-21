@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Galleon Public Discord Bots for ETHMAXY Prices",
   "scripts": {
-    "start": "node src/ethmaxy.js",
-    "dev": "nodemon src/ethmaxy.js",
+    "start:ethmaxy": "node src/ethmaxy.js",
+    "dev:ethmaxy": "nodemon src/ethmaxy.js",
+    "start:dbl": "node src/dbl.js",
+    "dev:dbl": "nodemon src/dbl.js",
     "test": "mocha --reporter spec"
   },
   "keywords": [

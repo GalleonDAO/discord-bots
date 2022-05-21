@@ -1,24 +1,23 @@
 const { 
   numberWithCommas,
-  fetchCoingeckoData,
-  fetchTokensetsData 
+  fetchCoingeckoData 
 }                      = require('./helpers/utils')
 const { Client }       = require('discord.js')
 const dotenv           = require('dotenv')
 
-const COINGECKO_TOKENID = 'eth-max-yield-index'
-const TOKENSETS_TOKENID = 'ethmaxy'
+const COINGECKO_TOKENID = 'doubloon'
 
 dotenv.config()
 
 let client = new Client()
-client.login(process.env.DISCORD_API_TOKEN_ETHMAXY)
+client.login(process.env.DISCORD_API_TOKEN_DBL)
 client.on('ready', () => {
   console.log(`Bot successfully started as ${client.user.tag} 🤖`)
-  //Get price on launch
+
+  //Getprice on launch
   updateBot()
 
-  //Update loop
+    //Update loop
   setInterval(async () => {
     await updateBot()
   }, 1 * 1000 * 60)
@@ -26,22 +25,21 @@ client.on('ready', () => {
 
 const updateBot = async () => {
   console.log('Fething data...')
-  const coingeckoData = await fetchCoingeckoData(COINGECKO_TOKENID)
-  const tokensetsData = await fetchTokensetsData(TOKENSETS_TOKENID)
+  const coingeckoData = await fetchCoingeckoData(COINGECKO_TOKENID)            
 
-  if (!coingeckoData || !tokensetsData) {
-    console.warn('Missing data\r\ncoingecko: ' + JSON.stringify(coingeckoData) + '\r\ntokensets: ' + JSON.stringify(tokensetsData))
+  if (!coingeckoData){
+    console.warn('Missing data\r\ncoingecko: ' + JSON.stringify(coingeckoData))
     return
   }
 
-  const { change } = coingeckoData
   const { 
     price,
     symbol,
-    marketCap
-  } = tokensetsData
+    circSupply,
+    change
+  } = coingeckoData
 
-  console.log('Fetched: ' + symbol, price, marketCap)
+  console.log('Fetched: ' + symbol, price, circSupply)
 
   client.guilds.cache.forEach(async (guild) => {
     const botMember = guild.me
@@ -55,7 +53,7 @@ const updateBot = async () => {
   })
   if (client.user) {
     client.user.setActivity(
-      'MC: ' + numberWithCommas(marketCap),
+      'MC: $' + numberWithCommas(Math.round(price * circSupply)),
       { type: 'WATCHING' },
     )
   }

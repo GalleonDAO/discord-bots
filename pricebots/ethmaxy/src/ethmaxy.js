@@ -1,6 +1,9 @@
-const { Client } = require('discord.js')
-const dotenv = require('dotenv')
-const { numberWithCommas, fetchCoingeckoData, fetchTokensetsData } = require('./helpers/utils')
+const { 
+  numberWithCommas,
+  fetchCoingeckoData,
+  fetchTokensetsData } = require('./helpers/utils')
+const { Client }       = require('discord.js')
+const dotenv           = require('dotenv')
 
 const COINGECKO_TOKENID = 'eth-max-yield-index'
 const TOKENSETS_TOKENID = 'ethmaxy'
@@ -45,6 +48,9 @@ const task = async () => {
     )
   }
 }
+
+//Fetch price on launch
+task()
 
 setInterval(async () => {
   await task()

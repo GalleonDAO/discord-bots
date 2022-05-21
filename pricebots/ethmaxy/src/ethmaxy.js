@@ -1,23 +1,32 @@
 const { Client } = require('discord.js')
 const dotenv = require('dotenv')
-const { fetchData, numberWithCommas } = require('./helpers/utils')
+const { fetchData, numberWithCommas, fetchCoingeckoData, fetchTokensetsData } = require('./helpers/utils')
+
+const COINGECKO_TOKENID = 'eth-max-yield-index'
+const TOKENSETS_TOKENID = 'ethmaxy'
 
 dotenv.config()
 
 let client = new Client()
-client.login(process.env.DISCORD_API_TOKEN_ETHMAXY)
+client.login(process.env.DISCORD_API_TOKEN)
 client.on('ready', () =>
   console.log(`Bot successfully started as ${client.user.tag} 🤖`),
 )
 
 const task = async () => {
-  const data = await fetchData('eth-max-yield-index')
+  console.log('Fething data...')
+  const coingeckoData = await fetchCoingeckoData(COINGECKO_TOKENID)
+  const tokensetsData = await fetchTokensetsData(TOKENSETS_TOKENID)
 
-  if (!data) return
+  if (!coingeckoData || !tokensetsData) {
+    console.warn('Missing data\r\ncoingecko: ' + JSON.stringify(coingeckoData) + '\r\ntokensets: ' + JSON.stringify(tokensetsData))
+    return
+  }
 
-  const { price, symbol, circSupply, change } = data
+  const { change } = coingeckoData
+  const { price, symbol, marketCap } = tokensetsData
 
-  console.log('Fetched: ' + symbol, price, circSupply)
+  console.log('Fetched: ' + symbol, price, marketCap)
 
   client.guilds.cache.forEach(async (guild) => {
     const botMember = guild.me
@@ -31,7 +40,7 @@ const task = async () => {
   })
   if (client.user) {
     client.user.setActivity(
-      'MC: $' + numberWithCommas(Math.round(price * circSupply)),
+      'MC: $' + numberWithCommas(marketCap),
       { type: 'WATCHING' },
     )
   }

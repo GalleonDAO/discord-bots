@@ -16,7 +16,7 @@ const COINGECKO_TOKENID = 'eth-max-yield-index'
 const TOKENSETS_TOKENID = 'ethmaxy'
 
 describe("Price Fetching Services", function() {
-    describe("Coingecko data fetch", function() {
+    describe("fetchCoingeckoData", function() {
         it("Happy Path - fetches data and maps", async function() {
             const expected = { 
                 price: 100000000,
@@ -44,7 +44,7 @@ describe("Price Fetching Services", function() {
         });
     });
 
-    describe("TokenSets data fetch", function() {
+    describe("fetchTokensetsData", function() {
         it("Happy Path - fetches data and maps", async function() {
             const expected = { 
                 price: "1000.0",
@@ -64,6 +64,17 @@ describe("Price Fetching Services", function() {
 
             const tokensetsData = await fetchTokensetsData(TOKENSETS_TOKENID)
             expect(tokensetsData).to.deep.equal(expected)
+        });
+    });
+});
+
+describe("Formatting tools", function(){
+    describe("Formatting tools", function(){
+        it("4 digit Int - returns with commas", function(){
+            const expected = "1,000"
+
+            const result = numberWithCommas(1000)
+            expect(result).to.equal(expected)
         });
     });
 });

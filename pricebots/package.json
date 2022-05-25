@@ -1,7 +1,7 @@
 {
-  "name": "galleon-ethmaxy-pricebots",
+  "name": "galleon-pricebots",
   "version": "1.0.0",
-  "description": "Galleon Public Discord Bots for ETHMAXY Prices",
+  "description": "Galleon Public Discord Bots for product Prices",
   "scripts": {
     "start:ethmaxy": "node src/ethmaxy.js",
     "dev:ethmaxy": "nodemon src/ethmaxy.js",

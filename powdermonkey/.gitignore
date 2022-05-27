@@ -1,0 +1,12 @@
+node_modules/
+.env
+.netlify
+app.json
+.netlify.toml
+.idea/
+.DS_Store
+build/
+coverage
+.nyc_output
+.vscode
+.eslintrc.json

@@ -1,0 +1,10 @@
+{
+    "galleoncommunity": {
+        "name": "Galleon Community",
+        "value": "https://galleon.community/"
+    },
+    "galleondapp": {
+        "name": "Galleon Dapp",
+        "value": "https://app.galleon.community/"
+    }
+}

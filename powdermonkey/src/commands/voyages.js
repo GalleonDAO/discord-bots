@@ -30,15 +30,15 @@ class VoyagesCommand {
         const voyageName = interaction.options.getString('voyage');
         if(!voyageName){
             const voyages = this.voyagesRepository.readAll();
-            await interaction.reply(this.getvoyagesEmbed(voyages));
+            await interaction.reply(this.getVoyagesEmbed(voyages));
         }
         else{
             const voyage = this.voyagesRepository.read(voyageName);
-            await interaction.reply(this.getvoyageEmbed(voyage));
+            await interaction.reply(this.getVoyageEmbed(voyage));
         }
     }
 
-    getvoyagesEmbed(voyages){
+    getVoyagesEmbed(voyages){
         const embed = new MessageEmbed()
             .setTitle('Voyages');
         Object.keys(voyages).forEach(key =>
@@ -47,7 +47,7 @@ class VoyagesCommand {
             return { embeds: [embed]};
     }
 
-    getvoyageEmbed(voyage){
+    getVoyageEmbed(voyage){
         const filePath = path.join('src/assets/logos/',voyage.icon);
         const file = new MessageAttachment(filePath);
         return{ 

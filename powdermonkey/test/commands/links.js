@@ -9,21 +9,48 @@ const linksRepositoryMock = {
     read(key){
         console.log(`requested key ${key}`);
         return {
-            name: "Galleon Dapp",
-            value: "https://app.galleon.community/"
+            "name": "Galleon Dapp",
+            "description": "Interact with Galleon Structured products Here",
+            "url": "https://app.galleon.community/",
+            "icon": "galleon.png"
         }
     },
     readAll(){
         return {
             galleoncommunity: {
                 "name": "Galleon Community",
-                "value": "https://galleon.community/"
+                "description": "The Central Page for all things Galleon",
+                "url": "https://galleon.community/",
+                "icon": "galleon.png"
             },
             galleondapp: {
                 "name": "Galleon Dapp",
-                "value": "https://app.galleon.community/"
+                "description": "Interact with Galleon Structured products Here",
+                "url": "https://app.galleon.community/",
+                "icon": "galleon.png"
             }
         }
+    }
+}
+
+const embedBuilderMock = {
+    outputs:{},
+
+    createSingleSubjectEmbed(title, description, thumbnail, url){
+        this.outputs['title'] = title;
+        this.outputs['description'] = description;
+        this.outputs['thumbnail'] = thumbnail;
+        this.outputs['url'] = url;
+
+        return 'embed';
+    },
+    createMultiSubjectEmbed(title, description, thumbnail, fields){
+        this.outputs['title'] = title;
+        this.outputs['description'] = description;
+        this.outputs['thumbnail'] = thumbnail;
+        this.outputs['fields'] = fields;
+
+        return 'embed';
     }
 }
 
@@ -33,15 +60,17 @@ describe("Links Command", function() {
          async function(){
             var outputs = {};
 
+            const expectedLink = linksRepositoryMock.read('galleondapp');
+            const expectedEmbedOutputs = {
+                title: expectedLink.name,
+                description: expectedLink.description,
+                thumbnail: expectedLink.icon,
+                url: expectedLink.url
+           };
             const expectedRequestedName = 'service';
             const expectedReply = "embed";
-            const expectedEmbedRequest = linksRepositoryMock.read('galleondapp');
 
-            const subject = new LinksCommand(linksRepositoryMock);
-            subject.getLinkEmbed = function (link){
-                outputs.requestedEmbed = link;
-                return "embed";
-            }
+            const subject = new LinksCommand(linksRepositoryMock, embedBuilderMock);
 
             const interaction = {
                 options:{
@@ -57,23 +86,24 @@ describe("Links Command", function() {
 
             await subject.execute(interaction);
             
+            expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
             expect(outputs.requestedName).equal(expectedRequestedName);
-            expect(outputs.requestedEmbed).to.deep.equal(expectedEmbedRequest);
             expect(outputs.reply).equal(expectedReply);
         });
         it("interaction without string Option -- Returns all links",
         async function(){
            var outputs = {};
-
+   
+           const expectedEmbedOutputs = {
+                title: 'Links',
+                description: 'Here are The links I Have',
+                thumbnail: 'links.png',
+                fields: linksRepositoryMock.readAll()
+           };
            const expectedRequestedName = 'service';
            const expectedReply = "embed";
-           const expectedEmbedRequest = linksRepositoryMock.readAll();
 
-           const subject = new LinksCommand(linksRepositoryMock);
-           subject.getLinksEmbed = function (links){
-               outputs.requestedEmbed = links;
-               return "embed";
-           }
+           const subject = new LinksCommand(linksRepositoryMock, embedBuilderMock);
 
            const interaction = {
                options:{
@@ -89,8 +119,8 @@ describe("Links Command", function() {
 
            await subject.execute(interaction);
 
+           expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
            expect(outputs.requestedName).equal(expectedRequestedName);
-           expect(outputs.requestedEmbed).to.deep.equal(expectedEmbedRequest);
            expect(outputs.reply).equal(expectedReply);
        })
     })

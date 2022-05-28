@@ -33,21 +33,45 @@ const voyagesRepositoryMock = {
     }
 }
 
+const embedBuilderMock = {
+    outputs:{},
+
+    createSingleSubjectEmbed(title, description, thumbnail, url){
+        this.outputs['title'] = title;
+        this.outputs['description'] = description;
+        this.outputs['thumbnail'] = thumbnail;
+        this.outputs['url'] = url;
+
+        return 'embed';
+    },
+    createMultiSubjectEmbed(title, description, thumbnail, fields){
+        this.outputs['title'] = title;
+        this.outputs['description'] = description;
+        this.outputs['thumbnail'] = thumbnail;
+        this.outputs['fields'] = fields;
+
+        return 'embed';
+    }
+}
+
+
 describe("Voyages Command", function() {
     describe("execute()", function(){
         it("interaction has string Option -- Returns specific Voyage",
          async function(){
             var outputs = {};
 
+            const expectedProduct = voyagesRepositoryMock.read('fdc');
+            const expectedEmbedOutputs = {
+                title: expectedProduct.name,
+                description: expectedProduct.description,
+                thumbnail: expectedProduct.icon,
+                url: expectedProduct.url
+           };
             const expectedRequestedName = 'voyage';
             const expectedReply = "embed";
-            const expectedEmbedRequest = voyagesRepositoryMock.read('fdc');
 
-            const subject = new VoyagesCommand(voyagesRepositoryMock);
-            subject.getVoyageEmbed = function (voyage){
-                outputs.requestedEmbed = voyage;
-                return "embed";
-            }
+            const subject = new VoyagesCommand(voyagesRepositoryMock, embedBuilderMock);
 
             const interaction = {
                 options:{
@@ -63,23 +87,24 @@ describe("Voyages Command", function() {
 
             await subject.execute(interaction);
             
+            expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
             expect(outputs.requestedName).equal(expectedRequestedName);
-            expect(outputs.requestedEmbed).to.deep.equal(expectedEmbedRequest);
             expect(outputs.reply).equal(expectedReply);
         });
         it("interaction without string Option -- Returns all voyages",
         async function(){
            var outputs = {};
 
+           const expectedEmbedOutputs = {
+            title: 'Voyages',
+            description: 'Here are all Current Voyages',
+            thumbnail: 'voyages.png',
+            fields: voyagesRepositoryMock.readAll()
+           };
            const expectedRequestedName = 'voyage';
            const expectedReply = "embed";
-           const expectedEmbedRequest = voyagesRepositoryMock.readAll();
 
-           const subject = new VoyagesCommand(voyagesRepositoryMock);
-           subject.getVoyagesEmbed = function (voyages){
-               outputs.requestedEmbed = voyages;
-               return "embed";
-           }
+           const subject = new VoyagesCommand(voyagesRepositoryMock, embedBuilderMock);
 
            const interaction = {
                options:{
@@ -95,8 +120,8 @@ describe("Voyages Command", function() {
 
            await subject.execute(interaction);
 
+           expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
            expect(outputs.requestedName).equal(expectedRequestedName);
-           expect(outputs.requestedEmbed).to.deep.equal(expectedEmbedRequest);
            expect(outputs.reply).equal(expectedReply);
        })
     })

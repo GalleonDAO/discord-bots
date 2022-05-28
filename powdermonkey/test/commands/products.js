@@ -11,8 +11,8 @@ const productsRepositoryMock = {
         return {
             name: "Doubloon",
             description: "Doubloon is the Arbitrum native governance token for Galleon",
-            dapp_url: "https://app.galleon.community/dbl",
-            icon: "dbl.png" 
+            url: "https://app.galleon.community/dbl",
+            icon: "dbl.png"
         }
     },
     readAll(){
@@ -20,18 +20,40 @@ const productsRepositoryMock = {
             dbl: {
                 "name": "Doubloon",
                 "description": "Doubloon is the Arbitrum native governance token for Galleon",
-                "dapp_url": "https://app.galleon.community/dbl",
+                "url": "https://app.galleon.community/dbl",
                 "icon": "dbl.png" 
             },
             ethmaxy: {
                 "name": "ETHMAXY",
                 "description": "ETHMAXY is the best leveraged $ETH liquid staking strategy in DeFi today, all within one tradable ERC20 token.",
-                "dapp_url": "https://app.galleon.community/ethmaxy",
-                "icon": "ethmaxy.png" 
+                "url": "https://app.galleon.community/ethmaxy",
+                "icon": "ethmaxy.png"
             }
         }
     }
 }
+
+const embedBuilderMock = {
+    outputs:{},
+
+    createSingleSubjectEmbed(title, description, thumbnail, url){
+        this.outputs['title'] = title;
+        this.outputs['description'] = description;
+        this.outputs['thumbnail'] = thumbnail;
+        this.outputs['url'] = url;
+
+        return 'embed';
+    },
+    createMultiSubjectEmbed(title, description, thumbnail, fields){
+        this.outputs['title'] = title;
+        this.outputs['description'] = description;
+        this.outputs['thumbnail'] = thumbnail;
+        this.outputs['fields'] = fields;
+
+        return 'embed';
+    }
+}
+
 
 describe("Products Command", function() {
     describe("execute()", function(){
@@ -39,15 +61,17 @@ describe("Products Command", function() {
          async function(){
             var outputs = {};
 
+            const expectedProduct = productsRepositoryMock.read('dbl');
+            const expectedEmbedOutputs = {
+                title: expectedProduct.name,
+                description: expectedProduct.description,
+                thumbnail: expectedProduct.icon,
+                url: expectedProduct.url
+           };
             const expectedRequestedName = 'product';
             const expectedReply = "embed";
-            const expectedEmbedRequest = productsRepositoryMock.read('dbl');
 
-            const subject = new ProductsCommand(productsRepositoryMock);
-            subject.getProductEmbed = function (product){
-                outputs.requestedEmbed = product;
-                return "embed";
-            }
+            const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock);
 
             const interaction = {
                 options:{
@@ -63,23 +87,24 @@ describe("Products Command", function() {
 
             await subject.execute(interaction);
             
+            expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
             expect(outputs.requestedName).equal(expectedRequestedName);
-            expect(outputs.requestedEmbed).to.deep.equal(expectedEmbedRequest);
             expect(outputs.reply).equal(expectedReply);
         });
         it("interaction without string Option -- Returns all Products",
         async function(){
            var outputs = {};
 
+           const expectedEmbedOutputs = {
+            title: 'Products',
+            description: 'Here are all Current Products',
+            thumbnail: 'products.png',
+            fields: productsRepositoryMock.readAll()
+           };
            const expectedRequestedName = 'product';
            const expectedReply = "embed";
-           const expectedEmbedRequest = productsRepositoryMock.readAll();
 
-           const subject = new ProductsCommand(productsRepositoryMock);
-           subject.getProductsEmbed = function (products){
-               outputs.requestedEmbed = products;
-               return "embed";
-           }
+           const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock);
 
            const interaction = {
                options:{
@@ -95,8 +120,8 @@ describe("Products Command", function() {
 
            await subject.execute(interaction);
 
+           expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
            expect(outputs.requestedName).equal(expectedRequestedName);
-           expect(outputs.requestedEmbed).to.deep.equal(expectedEmbedRequest);
            expect(outputs.reply).equal(expectedReply);
        })
     })

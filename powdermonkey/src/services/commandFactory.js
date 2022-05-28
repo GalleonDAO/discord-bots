@@ -2,6 +2,7 @@ const { LinksCommand } = require('../commands/links');
 const { ProductsCommand } = require('../commands/products');
 const { VoyagesCommand } = require('../commands/voyages');
 const { ContributeCommand } = require('../commands/contribute');
+const { ShantiesCommand } = require('../commands/shanties');
 class CommandFactory{
     constructor(serviceContainer){
         this.serviceContainer = serviceContainer;
@@ -18,6 +19,8 @@ class CommandFactory{
                 return new VoyagesCommand(this.serviceContainer.getService('voyagesRepository'),this.embedBuilder);
             case 'contribute':
                 return new ContributeCommand(this.serviceContainer.getService('contributeRepository'),this.embedBuilder);
+            case 'shanties':
+                return new ShantiesCommand(this.serviceContainer.getService('shantiesRepository'),this.embedBuilder);
         }
     }
 }

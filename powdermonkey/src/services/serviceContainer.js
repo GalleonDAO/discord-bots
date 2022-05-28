@@ -13,6 +13,7 @@ class ServiceContainer{
         services['productsRepository'] = new JsonRepository('../configuration/products.json');
         services['voyagesRepository'] = new JsonRepository('../configuration/voyages.json');
         services['contributeRepository'] = new JsonRepository('../configuration/contribute.json');
+        services['shantiesRepository'] = new JsonRepository('../configuration/shanties.json');
         services['embedBuilder'] = new EmbedBuilder();
 
         return services;

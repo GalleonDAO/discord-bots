@@ -10,6 +10,7 @@ class ServiceContainer{
 
         services['linksRepository'] = new JsonRepository('../configuration/links.json');
         services['productsRepository'] = new JsonRepository('../configuration/products.json');
+        services['voyagesRepository'] = new JsonRepository('../configuration/voyages.json');
 
         return services;
     }

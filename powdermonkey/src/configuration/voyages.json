@@ -1,0 +1,14 @@
+{
+    "fdc":{
+        "name": "Flying Dutchman Capital",
+        "description": "Add me",
+        "url": "https://flyingdutchman.capital/",
+        "icon": "fdc.png"
+    },
+    "cursepirates":{
+        "name": "Cursed Pirates",
+        "description": "Add me",
+        "url": "https://cursedpirates.xyz/",
+        "icon": "pirates.png"
+    }
+}

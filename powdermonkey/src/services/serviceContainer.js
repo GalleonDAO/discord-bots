@@ -1,16 +1,18 @@
 const { JsonRepository } = require('./jsonRepository');
+const { EmbedBuilder } = require('../utils/embedBuilder');
 
 class ServiceContainer{
     constructor(){
-        this.services = this.configureServices();
+        this.services = this.#configureServices();
     }
 
-    configureServices(){
+    #configureServices(){
         var services = {};
 
         services['linksRepository'] = new JsonRepository('../configuration/links.json');
         services['productsRepository'] = new JsonRepository('../configuration/products.json');
         services['voyagesRepository'] = new JsonRepository('../configuration/voyages.json');
+        services['embedBuilder'] = new EmbedBuilder();
 
         return services;
     }

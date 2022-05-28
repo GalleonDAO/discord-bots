@@ -1,10 +1,17 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
-const path = require('path');
+/**
+ * @typedef {JsonRepository} = require('../services/jsonRepository');
+ * @typedef {EmbedBuilder} = require('../utils/embedBuilder');
+ */
 
 class VoyagesCommand {
-    constructor(voyagesRepository){
+    /**
+     * @param {JsonRepository} voyagesRepository data title Title of the embed
+     * @param {EmbedBuilder} embedBuilder Description of the embed
+     */
+    constructor(voyagesRepository, embedBuilder) {
         this.voyagesRepository = voyagesRepository;
+        this.embedBuilder = embedBuilder;
         this.data = this.getCommandBuilder();
     }
 
@@ -28,36 +35,17 @@ class VoyagesCommand {
 
     async execute(interaction){
         const voyageName = interaction.options.getString('voyage');
+        var embed;
         if(!voyageName){
             const voyages = this.voyagesRepository.readAll();
-            await interaction.reply(this.getVoyagesEmbed(voyages));
+            embed = new this.embedBuilder.createMultiSubjectEmbed('Voyages', 'Here are all Current Voyages', 'voyages.png', voyages);
         }
         else{
             const voyage = this.voyagesRepository.read(voyageName);
-            await interaction.reply(this.getVoyageEmbed(voyage));
+            embed = this.embedBuilder.createSingleSubjectEmbed(voyage.name, voyage.description, voyage.icon,voyage.url);
         }
-    }
 
-    getVoyagesEmbed(voyages){
-        const embed = new MessageEmbed()
-            .setTitle('Voyages');
-        Object.keys(voyages).forEach(key =>
-            embed.addField(voyages[key].name, voyages[key].description));
-
-            return { embeds: [embed]};
-    }
-
-    getVoyageEmbed(voyage){
-        const filePath = path.join('src/assets/logos/',voyage.icon);
-        const file = new MessageAttachment(filePath);
-        return{ 
-            embeds: [new MessageEmbed()
-            .setTitle(voyage.name)
-            .setThumbnail(`attachment://${voyage.icon}`)
-            .setDescription(voyage.description)
-            .setURL(voyage.dapp_url)],
-            files: [file]
-        }
+        await interaction.reply(embed);
     }
 }
 

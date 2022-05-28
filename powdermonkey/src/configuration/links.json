@@ -1,10 +1,14 @@
 {
     "galleoncommunity": {
         "name": "Galleon Community",
-        "value": "https://galleon.community/"
+        "description": "The Central Page for all things Galleon",
+        "url": "https://galleon.community/",
+        "icon": "galleon.png"
     },
     "galleondapp": {
         "name": "Galleon Dapp",
-        "value": "https://app.galleon.community/"
+        "description": "Interact with Galleon Structured products Here",
+        "url": "https://app.galleon.community/",
+        "icon": "galleon.png"
     }
 }

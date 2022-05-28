@@ -2,13 +2,13 @@
     "dbl": {
         "name": "Doubloon",
         "description": "Doubloon is the Arbitrum native governance token for Galleon",
-        "dapp_url": "https://app.galleon.community/dbl",
-        "icon": "dbl.png" 
+        "url": "https://app.galleon.community/dbl",
+        "icon": "galleon.png" 
     },
     "ethmaxy": {
         "name": "ETHMAXY",
         "description": "ETHMAXY is the best leveraged $ETH liquid staking strategy in DeFi today, all within one tradable ERC20 token.",
-        "dapp_url": "https://app.galleon.community/ethmaxy",
-        "icon": "ethmaxy.png" 
+        "url": "https://app.galleon.community/ethmaxy",
+        "icon": "ethmaxy.png"
     }
 }

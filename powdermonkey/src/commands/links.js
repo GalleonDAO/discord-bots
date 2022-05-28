@@ -1,9 +1,17 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+/**
+ * @typedef {JsonRepository} = require('../services/jsonRepository');
+ * @typedef {EmbedBuilder} = require('../utils/embedBuilder');
+ */
 
 class LinksCommand{
-    constructor(linksRepository){
+    /**
+     * @param {JsonRepository} linksRepository data title Title of the embed
+     * @param {EmbedBuilder} embedBuilder Description of the embed
+     */
+    constructor(linksRepository, embedBuilder){
         this.linksRepository = linksRepository;
+        this.embedBuilder = embedBuilder;
         this.data = this.getCommandBuilder();
     }
 
@@ -27,31 +35,17 @@ class LinksCommand{
 
     async execute(interaction){
         const service = interaction.options.getString('service');
+        var embed;
+
         if(!service){
             const links = this.linksRepository.readAll();
-            await interaction.reply(this.getLinksEmbed(links));
+            embed = this.embedBuilder.createMultiSubjectEmbed('Links','Here are The links I Have', 'links.png',links);
         }
         else{
             const link = this.linksRepository.read(service);
-            await interaction.reply(this.getLinkEmbed(link));
+            embed = this.embedBuilder.createSingleSubjectEmbed(link.name, link.description, link.icon, link.url);
         }
-    }
-
-    getLinksEmbed(links){
-        const embed = new MessageEmbed()
-            .setTitle('Links');
-        Object.keys(links).forEach(key =>
-            embed.addField(links[key].name, links[key].value));
-
-        return { embeds: [embed]};
-    }
-
-    getLinkEmbed(link){
-        return {
-            embeds: [new MessageEmbed()
-                        .setTitle(link.name)
-                        .setURL(link.value)]
-        };
+        await interaction.reply(embed);
     }
 }
 

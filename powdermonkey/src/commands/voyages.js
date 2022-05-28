@@ -36,9 +36,10 @@ class VoyagesCommand {
     async execute(interaction){
         const voyageName = interaction.options.getString('voyage');
         var embed;
+
         if(!voyageName){
             const voyages = this.voyagesRepository.readAll();
-            embed = new this.embedBuilder.createMultiSubjectEmbed('Voyages', 'Here are all Current Voyages', 'voyages.png', voyages);
+            embed = this.embedBuilder.createMultiSubjectEmbed('Voyages', 'Here are all Current Voyages', 'voyages.png', voyages);
         }
         else{
             const voyage = this.voyagesRepository.read(voyageName);

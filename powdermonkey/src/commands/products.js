@@ -1,10 +1,17 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
-const path = require('path');
+/**
+ * @typedef {JsonRepository} = require('../services/jsonRepository');
+ * @typedef {EmbedBuilder} = require('../utils/embedBuilder');
+ */
 
 class ProductsCommand {
-    constructor(productsRepository){
+    /**
+     * @param {JsonRepository} productsRepository data title Title of the embed
+     * @param {EmbedBuilder} embedBuilder Description of the embed
+     */
+    constructor(productsRepository, embedBuilder) {
         this.productsRepository = productsRepository;
+        this.embedBuilder = embedBuilder;
         this.data = this.getCommandBuilder();
     }
 
@@ -23,43 +30,21 @@ class ProductsCommand {
                 });
                 return option;
             });
-            
     }
 
     async execute(interaction){
         const productName = interaction.options.getString('product');
+        var embed;
+        
         if(!productName){
             const products = this.productsRepository.readAll();
-            await interaction.reply(this.getProductsEmbed(products));
+            embed = this.embedBuilder.createMultiSubjectEmbed('Products', 'Here are all Current Products', 'products.png',products);
         }
         else{
             const product = this.productsRepository.read(productName);
-            await interaction.reply(this.getProductEmbed(product));
+            embed = this.embedBuilder.createSingleSubjectEmbed(product.name, product.description, product.icon, product.url);
         }
-    }
-
-    getProductsEmbed(products){
-        const embed = new MessageEmbed()
-            .setTitle('Products');
-        Object.keys(products).forEach(key =>
-            embed.addField(products[key].name, products[key].description));
-
-            return { embeds: [embed]};
-    }
-
-    getProductEmbed(product){
-        const filePath = path.join('src/assets/logos/',product.icon);
-        const file = new MessageAttachment(filePath);
-        return{ 
-            embeds: [new MessageEmbed()
-            .setTitle(product.name)
-            .setThumbnail(`attachment://${product.icon}`)
-            .setDescription(product.description)
-            .setURL(product.dapp_url)],
-            files: [file]
-        }
-
-        //TODO: Get Current Price
+        await interaction.reply(embed);
     }
 }
 

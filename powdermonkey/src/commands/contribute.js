@@ -22,7 +22,7 @@ class ContributeCommand {
     }
 
     async execute(interaction){
-        const contirbuteConfig = this.contirbuteRepository.readAll();
+        const contirbuteConfig = this.contirbuteRepository.readAll()['embed'];
         const embed = this.embedBuilder.createSingleSubjectEmbed(
             contirbuteConfig.name,
             contirbuteConfig.description,

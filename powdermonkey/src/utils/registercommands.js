@@ -9,6 +9,7 @@ module.exports.registerApplicationCommands = async (API_TOKEN, CLIENT_ID, GUILD_
     const commandsData = [];
 
     commands.forEach(command => {
+        console.log(`Adding Command: ${command.data.name}`)
         commandsData.push(command.data.toJSON());
     });
 

@@ -1,3 +1,5 @@
+const { JsonRepository } = require('./jsonRepository');
+
 class ServiceContainer{
     constructor(){
         this.services = this.configureServices();
@@ -6,8 +8,8 @@ class ServiceContainer{
     configureServices(){
         var services = {};
 
-        services['linksRepository'] = require('./linksRepository');
-        services['productsRepository'] = require('./productsRepository');
+        services['linksRepository'] = new JsonRepository('../configuration/links.json');
+        services['productsRepository'] = new JsonRepository('../configuration/products.json');
 
         return services;
     }

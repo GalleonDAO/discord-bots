@@ -6,3 +6,8 @@ app.json
 .idea/
 .DS_Store
 build/
+coverage
+.nyc_output
+.vscode
+.eslintrc.json
+pricebots/Create-DockerImages.ps1

@@ -1,10 +1,13 @@
 {
-  "name": "galleon-doubloon-pricebots",
+  "name": "galleon-pricebots",
   "version": "1.0.0",
-  "description": "Galleon Public Discord Bots for Doubloon Prices",
+  "description": "Galleon Public Discord Bots for product Prices",
   "scripts": {
-    "start": "node src/dbl.js",
-    "dev": "nodemon src/dbl.js"
+    "start:ethmaxy": "node src/ethmaxy.js",
+    "dev:ethmaxy": "nodemon src/ethmaxy.js",
+    "start:dbl": "node src/dbl.js",
+    "dev:dbl": "nodemon src/dbl.js",
+    "test": "mocha --reporter spec"
   },
   "keywords": [
     "discord",
@@ -21,12 +24,16 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
+    "mocha": "^10.0.0",
+    "nock": "^13.2.4",
     "nodemon": "^2.0.7",
+    "nyc": "^15.1.0",
     "prettier": "^2.2.1"
   }
 }

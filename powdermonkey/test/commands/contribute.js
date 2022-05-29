@@ -50,12 +50,12 @@ describe("Contribute Command", function() {
         async function(){
            var outputs = {};
 
-           const contirbuteConfig = contributeRepositoryMock.readAll()['embed'];
+           const contributeConfig = contributeRepositoryMock.readAll()['embed'];
            const expectedEmbedOutputs = {
-            title: contirbuteConfig.name,
-            description: contirbuteConfig.description,
-            thumbnail: contirbuteConfig.icon,
-            url: contirbuteConfig.url
+            title: contributeConfig.name,
+            description: contributeConfig.description,
+            thumbnail: contributeConfig.icon,
+            url: contributeConfig.url
            };
            const expectedReply = "embed";
 

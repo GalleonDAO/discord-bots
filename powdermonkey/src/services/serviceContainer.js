@@ -9,12 +9,13 @@ class ServiceContainer{
     #configureServices(){
         var services = {};
 
-        services['linksRepository'] = new JsonRepository('../configuration/links.json');
-        services['productsRepository'] = new JsonRepository('../configuration/products.json');
-        services['voyagesRepository'] = new JsonRepository('../configuration/voyages.json');
+        services['linksRepository']      = new JsonRepository('../configuration/links.json');
+        services['productsRepository']   = new JsonRepository('../configuration/products.json');
+        services['voyagesRepository']    = new JsonRepository('../configuration/voyages.json');
         services['contributeRepository'] = new JsonRepository('../configuration/contribute.json');
-        services['shantiesRepository'] = new JsonRepository('../configuration/shanties.json');
-        services['embedBuilder'] = new EmbedBuilder();
+        services['shantiesRepository']   = new JsonRepository('../configuration/shanties.json');
+        services['whitelistRepository']  = new JsonRepository('../configuration/whitelist.json');
+        services['embedBuilder']         = new EmbedBuilder();
 
         return services;
     }

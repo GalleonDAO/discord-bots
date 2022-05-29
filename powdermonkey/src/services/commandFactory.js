@@ -3,6 +3,7 @@ const { ProductsCommand } = require('../commands/products');
 const { VoyagesCommand } = require('../commands/voyages');
 const { ContributeCommand } = require('../commands/contribute');
 const { ShantiesCommand } = require('../commands/shanties');
+const { WhitelistCommand } = require('../commands/whitelist');
 class CommandFactory{
     constructor(serviceContainer){
         this.serviceContainer = serviceContainer;
@@ -21,6 +22,8 @@ class CommandFactory{
                 return new ContributeCommand(this.serviceContainer.getService('contributeRepository'),this.embedBuilder);
             case 'shanties':
                 return new ShantiesCommand(this.serviceContainer.getService('shantiesRepository'),this.embedBuilder);
+            case 'whitelist':
+                return new WhitelistCommand(this.serviceContainer.getService('whitelistRepository'),this.embedBuilder);
         }
     }
 }

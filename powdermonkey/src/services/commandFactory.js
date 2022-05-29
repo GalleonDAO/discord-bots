@@ -4,6 +4,7 @@ const { VoyagesCommand } = require('../commands/voyages');
 const { ContributeCommand } = require('../commands/contribute');
 const { ShantiesCommand } = require('../commands/shanties');
 const { WhitelistCommand } = require('../commands/whitelist');
+const { RoleplayCommand } = require('../commands/roleplay');
 class CommandFactory{
     constructor(serviceContainer){
         this.serviceContainer = serviceContainer;
@@ -24,6 +25,8 @@ class CommandFactory{
                 return new ShantiesCommand(this.serviceContainer.getService('shantiesRepository'),this.embedBuilder);
             case 'whitelist':
                 return new WhitelistCommand(this.serviceContainer.getService('whitelistRepository'),this.embedBuilder);
+            case 'roleplay':
+                return new RoleplayCommand(this.serviceContainer.getService('glossaryRepository'),this.embedBuilder);
         }
     }
 }

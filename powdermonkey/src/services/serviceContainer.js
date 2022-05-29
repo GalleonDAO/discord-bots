@@ -15,6 +15,7 @@ class ServiceContainer{
         services['contributeRepository'] = new JsonRepository('../configuration/contribute.json');
         services['shantiesRepository']   = new JsonRepository('../configuration/shanties.json');
         services['whitelistRepository']  = new JsonRepository('../configuration/whitelist.json');
+        services['glossaryRepository']   = new JsonRepository('../configuration/glossary.json');
         services['embedBuilder']         = new EmbedBuilder();
 
         return services;

@@ -3,7 +3,7 @@
         "name": "Doubloon (DBL)",
         "description": "Doubloon is the Arbitrum native governance token for Galleon",
         "url": "https://app.galleon.community/dbl",
-        "icon": "galleon.png" 
+        "icon": "dbl.png" 
     },
     "ethmaxy": {
         "name": "ETH Max Yield Index (ETHMAXY)",

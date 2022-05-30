@@ -1,10 +1,7 @@
 const { registerApplicationCommands } = require ('./utils/registercommands');
-const fs = require('fs');
-const path = require('path');
 const { Client, Collection, Intents } = require('discord.js');
 const dotenv = require('dotenv');
 const { ServiceContainer } = require('./services/serviceContainer');
-const { CommandFactory } = require('./services/commandFactory');
 
 dotenv.config();
 
@@ -13,18 +10,13 @@ const CLIENT_ID = process.env.APPLICATION_ID
 const GUILD_ID = process.env.GUILD_ID
 
 const serviceContainer = new ServiceContainer();
-const commandFactory = new CommandFactory(serviceContainer);
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] })
 
 client.commands = new Collection();
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-	const commandName = path.parse(file).name;
-	const command = commandFactory.createCommand(commandName);
-	
+for (const key of serviceContainer.getCommandsList()){
+	const command = serviceContainer.getCommand(key);
 	client.commands.set(command.data.name, command);
 }
 
@@ -51,6 +43,6 @@ client.on('interactionCreate', async interaction => {
 
 const registerCommands = async () => {
     // client.guilds.cache.forEach(async (guild) => {
-        await registerApplicationCommands(DISCORD_API_TOKEN, CLIENT_ID, GUILD_ID, client.commands);
+	await registerApplicationCommands(DISCORD_API_TOKEN, CLIENT_ID, GUILD_ID, client.commands);
     // })
 };

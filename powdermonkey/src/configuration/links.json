@@ -30,7 +30,7 @@
         "icon": "galleon.png"
     },
     "documentation": {
-        "name": "documentation",
+        "name": "Documentation",
         "description": "Read Galleon's documentation",
         "url": "https://docs.galleon.community/",
         "icon": "glossary.png"

@@ -1,4 +1,10 @@
 {
-    "avast": {"name": "Avast Ye!","description": "A hailing phrase to indicate that the hailed must stop and give attention."},
-    "bilge": {"name":"Bilge","description": "The lowest part inside the ship, within the hull itself. If any place on the ship was going to be dank and musty, the bilge was such a place. It was the first place to show signs of leakage and was often considered the most filthy, dead space of a ship. Hence, a \"bilge rat\" is a creature considered most lowly by a pirate. Though, many a pirate found himself eating those same rats to survive!"}
+    "avast": {
+        "name": "Avast Ye!",
+        "description": "A hailing phrase to indicate that the hailed must stop and give attention."
+    },
+    "bilge": {
+        "name":"Bilge",
+        "description": "The lowest part inside the ship, within the hull itself. If any place on the ship was going to be dank and musty, the bilge was such a place. It was the first place to show signs of leakage and was often considered the most filthy, dead space of a ship. Hence, a \"bilge rat\" is a creature considered most lowly by a pirate. Though, many a pirate found himself eating those same rats to survive!"
+    }
 }

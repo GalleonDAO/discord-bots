@@ -18,5 +18,15 @@
             "Spotify": "https://open.spotify.com/track/5tLHdDudxoCVAs89X6G5dL",
             "Youtube": "https://www.youtube.com/watch?v=Yeh1S_kl8YI"
         }
+    },
+    "hoisthecolours": {
+        "name": "Hoist the Colours",
+        "artist": "Colm R. McGuinness",
+        "description": "Davy Jones add your Description Here",
+        "icon": "davyjones.png",
+        "links": {
+            "Spotify": "https://open.spotify.com/track/2H0RTZvOwdFcpf8GWattYH",
+            "Youtube": "https://www.youtube.com/watch?v=IX0r4H2i9uY"
+        }
     }
 }

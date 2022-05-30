@@ -73,11 +73,9 @@ describe("Links Command", function() {
             const subject = new LinksCommand(linksRepositoryMock, embedBuilderMock);
 
             const interaction = {
-                options:{
-                    getString(name){
-                        outputs.requestedName = name;
-                        return 'galleondapp';
-                    }
+                getStringChoice(name){
+                    outputs.requestedName = name;
+                    return 'galleondapp';
                 },
                 reply(message){
                     outputs.reply = message;
@@ -106,15 +104,13 @@ describe("Links Command", function() {
            const subject = new LinksCommand(linksRepositoryMock, embedBuilderMock);
 
            const interaction = {
-               options:{
-                   getString(name){
-                       outputs.requestedName = name;
-                       return undefined;
-                   }
-               },
-               reply(message){
-                   outputs.reply = message;
-               }
+                getStringChoice(name){
+                    outputs.requestedName = name;
+                    return undefined;
+                },
+                reply(message){
+                    outputs.reply = message;
+                }
            };
 
            await subject.execute(interaction);

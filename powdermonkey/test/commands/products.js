@@ -74,11 +74,9 @@ describe("Products Command", function() {
             const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock);
 
             const interaction = {
-                options:{
-                    getString(name){
-                        outputs.requestedName = name;
-                        return 'galleondapp';
-                    }
+                getStringChoice(name){
+                    outputs.requestedName = name;
+                    return 'dbl';
                 },
                 reply(message){
                     outputs.reply = message;
@@ -107,12 +105,10 @@ describe("Products Command", function() {
            const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock);
 
            const interaction = {
-               options:{
-                   getString(name){
-                       outputs.requestedName = name;
-                       return undefined;
-                   }
-               },
+                getStringChoice(name){
+                    outputs.requestedName = name;
+                    return undefined;
+                },
                reply(message){
                    outputs.reply = message;
                }

@@ -74,11 +74,9 @@ describe("Voyages Command", function() {
             const subject = new VoyagesCommand(voyagesRepositoryMock, embedBuilderMock);
 
             const interaction = {
-                options:{
-                    getString(name){
-                        outputs.requestedName = name;
-                        return 'fdc';
-                    }
+                getStringChoice(name){
+                    outputs.requestedName = name;
+                    return 'fdc';
                 },
                 reply(message){
                     outputs.reply = message;
@@ -107,12 +105,10 @@ describe("Voyages Command", function() {
            const subject = new VoyagesCommand(voyagesRepositoryMock, embedBuilderMock);
 
            const interaction = {
-               options:{
-                   getString(name){
-                       outputs.requestedName = name;
-                       return undefined;
-                   }
-               },
+                getStringChoice(name){
+                    outputs.requestedName = name;
+                    return undefined;
+                },
                reply(message){
                    outputs.reply = message;
                }

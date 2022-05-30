@@ -48,7 +48,7 @@ class GlossarySubCommand {
      */
     #getRandomWord(){
         const key = this.keys[Math.floor(Math.random() * this.keys.length)];
-        return {word: key, value: this.glossaryRepository.read(key)};
+        return this.glossaryRepository.read(key);
     }
 
     /**
@@ -58,8 +58,8 @@ class GlossarySubCommand {
         const word = this.#getRandomWord();
 
         return this.embedBuilder.createSingleSubjectEmbed(
-            word.word,
-            word.value,
+            word.name,
+            word.description,
             'glossary.png',
             "https://www.thepirateking.com/terminology/terminology_rennfair_primer.htm");
     }

@@ -1,7 +1,13 @@
-const { MessageAttachment, MessageEmbed, MessageActionRow, MessageButton, MessageActionRowComponentResolvable } = require('discord.js');
+const { MessageAttachment, MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const path = require('path');
 
 class EmbedBuilder{
+    constructor(){
+        // this.footerImage = 'galleon_banner.png';
+        // this.footerPath = path.join('src/assets/banners/', this.footerImage);
+        // this.footerFile = new MessageAttachment(this.footerPath);
+    }
+
     /**
      * @param {string} title Title of the embed
      * @param {string} description Description of the embed
@@ -14,12 +20,20 @@ class EmbedBuilder{
         const filePath = path.join('src/assets/logos/',thumbnail);
         const file = new MessageAttachment(filePath);
 
+        const actionRow = new MessageActionRow()
+            .addComponents(new MessageButton()
+                .setLabel('Link')
+                .setStyle('LINK')
+                .setURL(url));
+
         return{ 
             embeds: [new MessageEmbed()
             .setTitle(title)
             .setThumbnail(`attachment://${thumbnail}`)
             .setDescription(description)
+            .setColor('#040728')
             .setURL(url)],
+            components: [actionRow],
             files: [file]
         }
     }
@@ -38,6 +52,7 @@ class EmbedBuilder{
         const embed = new MessageEmbed()
         .setTitle(title)
         .setDescription(description)
+        .setColor('#040728')
         .setThumbnail(`attachment://${thumbnail}`);
         Object.keys(fields).forEach(key =>
             embed.addField(fields[key].name, fields[key].description));
@@ -70,6 +85,7 @@ class EmbedBuilder{
         const embed = new MessageEmbed()
                 .setTitle(title)
                 .setDescription(description.toString()) //safety net for unescaped characters
+                .setColor('#040728')
                 .setThumbnail(`attachment://${thumbnail}`); 
 
         const actionRow = new MessageActionRow()

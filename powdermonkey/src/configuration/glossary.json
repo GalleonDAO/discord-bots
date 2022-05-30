@@ -1,10 +1,30 @@
 {
-    "avast": {
-        "name": "Avast Ye!",
-        "description": "A hailing phrase to indicate that the hailed must stop and give attention."
-    },
-    "bilge": {
-        "name":"Bilge",
-        "description": "The lowest part inside the ship, within the hull itself. If any place on the ship was going to be dank and musty, the bilge was such a place. It was the first place to show signs of leakage and was often considered the most filthy, dead space of a ship. Hence, a \"bilge rat\" is a creature considered most lowly by a pirate. Though, many a pirate found himself eating those same rats to survive!"
-    }
+  "avast": {
+    "name": "Avast Ye!",
+    "description": "A hailing phrase to indicate that the hailed must stop and give attention."
+  },
+  "bilge": {
+    "name": "Bilge",
+    "description": "The lowest part inside the ship, within the hull itself. If any place on the ship was going to be dank and musty, the bilge was such a place. It was the first place to show signs of leakage and was often considered the most filthy, dead space of a ship. Hence, a \"bilge rat\" is a creature considered most lowly by a pirate. Though, many a pirate found himself eating those same rats to survive!"
+  },
+  "djl": {
+    "name": "Davy Jones' Locker",
+    "description": "A fictional place at the bottom of the ocean. In short, a term meaning death. Davy Jones was said to sink every ship he ever over took, and thus, the watery grave that awaited all who were sunk by him was given his name. To die at sea is to go to Davy Jones' Locker."
+  },
+  "dmtnt": {
+    "name": "Dead Men Tell No Tales",
+    "Description": "Standard pirate excuse for leaving no survivors."
+  },
+  "ahoy": {
+    "name": "Ahoy!",
+    "Description": "An interjection used to hail a ship or a person, or to attract attention."
+  },
+  "becalmed": {
+    "name": "Becalmed",
+    "Description": "The state of a sailing vessel which cannot move due to a lack of wind."
+  },
+  "broadside": {
+    "name": "Broadside",
+    "Description": "A general term for the vantage on another ship of absolute perpendicular to the direction it is going. To get along broadside a ship was to take it at a very vulnerable angle. This is of course, the largest dimension of a ship and is easiest to attack with larger arms. A \"Broadside\" has come to indicate a hit with a cannon or similar attack right in the main part of the ship."
+  }
 }

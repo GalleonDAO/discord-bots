@@ -30,19 +30,21 @@ class LinksCommand{
                 });
                 return option;
             });
-            
     }
 
     async execute(interaction){
-        const service = interaction.options.getString('service');
+        const serviceName = interaction.getStringChoice('service');
         var embed;
 
-        if(!service){
+        if(!serviceName){
             const links = this.linksRepository.readAll();
             embed = this.embedBuilder.createMultiSubjectEmbed('Links','Here are The links I Have', 'links.png',links);
         }
         else{
-            const link = this.linksRepository.read(service);
+            const link = this.linksRepository.read(serviceName);
+            if(!link)
+                return await interaction.choiceNotExistsError(serviceName);
+                           
             embed = this.embedBuilder.createSingleSubjectEmbed(link.name, link.description, link.icon, link.url);
         }
         await interaction.reply(embed);

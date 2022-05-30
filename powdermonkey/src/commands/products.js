@@ -33,7 +33,7 @@ class ProductsCommand {
     }
 
     async execute(interaction){
-        const productName = interaction.options.getString('product');
+        const productName = interaction.getStringChoice('product');
         var embed;
         
         if(!productName){
@@ -42,6 +42,9 @@ class ProductsCommand {
         }
         else{
             const product = this.productsRepository.read(productName);
+            if(!product)
+                return await interaction.choiceNotExistsError(productName);
+                           
             embed = this.embedBuilder.createSingleSubjectEmbed(product.name, product.description, product.icon, product.url);
         }
         await interaction.reply(embed);

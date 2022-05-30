@@ -34,6 +34,9 @@ class ShantiesCommand {
 
     async execute(interaction){
         const shanty = this.#getShanty();
+        if(!shanty)
+            return await interaction.genericError('Missing Shanty Data');
+
         const embed = this.embedBuilder.createMediaEmbed(
             `I've chosen ye ${shanty.name} by ${shanty.artist}`,
             shanty.description,

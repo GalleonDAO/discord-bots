@@ -25,8 +25,12 @@ class RoleplayCommand {
     }
 
     async execute(interaction){
-        if(interaction.options.getSubcommandGroup() === 'glossary')
+        const commandGroup = interaction.getSubcommandGroup();
+        if(commandGroup === 'glossary')
             await this.subcommands[0].execute(interaction);
+        else{
+            return await interaction.commandNotExistsError(commandGroup);
+        }
     }
 }
 

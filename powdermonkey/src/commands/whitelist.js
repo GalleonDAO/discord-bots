@@ -23,6 +23,9 @@ class WhitelistCommand {
 
     async execute(interaction){
         const whitelistConfig = this.whitelistRepository.readAll()['embed'];
+        if(!whitelistConfig)
+            return await interaction.genericError('ERROR: Missing config for WhitelistCommand');
+
         const embed = this.embedBuilder.createSingleSubjectEmbed(
             whitelistConfig.name,
             whitelistConfig.description,

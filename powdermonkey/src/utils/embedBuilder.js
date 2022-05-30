@@ -2,20 +2,14 @@ const { MessageAttachment, MessageEmbed, MessageActionRow, MessageButton } = req
 const path = require('path');
 
 class EmbedBuilder{
-    constructor(){
-        // this.footerImage = 'galleon_banner.png';
-        // this.footerPath = path.join('src/assets/banners/', this.footerImage);
-        // this.footerFile = new MessageAttachment(this.footerPath);
-    }
 
     /**
      * @param {string} title Title of the embed
      * @param {string} description Description of the embed
      * @param {string} thumbnail filename of the thumbnail in the /assets/logos/ directory
      * @param {string} url Url of the parent page
-     * @param {Object} _options additional options for embed
      */
-    createSingleSubjectEmbed(title, description, thumbnail, url, _options) {
+    createSingleSubjectEmbed(title, description, thumbnail, url) {
 
         const filePath = path.join('src/assets/logos/',thumbnail);
         const file = new MessageAttachment(filePath);
@@ -44,9 +38,8 @@ class EmbedBuilder{
      * @param {string} description Description of the embed
      * @param {string} thumbnail filename of the thumbnail in the /assets/logos/ directory
      * @param {Object} fields Fields to be added
-     * @param {Object} _options additional options for embed
      */
-    createMultiSubjectEmbed(title, description, thumbnail, fields, _options){
+    createMultiSubjectEmbed(title, description, thumbnail, fields){
         const filePath = path.join('src/assets/logos/',thumbnail);
         const file = new MessageAttachment(filePath);
 

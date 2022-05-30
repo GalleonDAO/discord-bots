@@ -22,12 +22,15 @@ class ContributeCommand {
     }
 
     async execute(interaction){
-        const contirbuteConfig = this.contirbuteRepository.readAll()['embed'];
+        const contributeConfig = this.contirbuteRepository.readAll()['embed'];
+        if(!contributeConfig)
+            return await interaction.genericError('ERROR: Missing config for ContributeCommand');
+
         const embed = this.embedBuilder.createSingleSubjectEmbed(
-            contirbuteConfig.name,
-            contirbuteConfig.description,
-            contirbuteConfig.icon,
-            contirbuteConfig.url);
+            contributeConfig.name,
+            contributeConfig.description,
+            contributeConfig.icon,
+            contributeConfig.url);
 
         await interaction.reply(embed);
     }

@@ -78,13 +78,15 @@ class GlossarySubCommand {
 
     async execute(interaction){
         var embed;
-        switch(interaction.options.getSubcommand()){
+        switch(interaction.getSubcommand()){
             case 'random':
                 embed = this.#getRandomEmbed();
                 break;
             case 'list':
                 embed = this.#getListEmbed();
                 break;
+            default:
+                return await interaction.commandNotExistsError(interaction.getSubcommand());
         }
 
         await interaction.reply(embed);

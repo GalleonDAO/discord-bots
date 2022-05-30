@@ -30,11 +30,10 @@ class VoyagesCommand {
                 });
                 return option;
             });
-            
     }
 
     async execute(interaction){
-        const voyageName = interaction.options.getString('voyage');
+        const voyageName = interaction.getStringChoice('voyage');
         var embed;
 
         if(!voyageName){
@@ -43,6 +42,9 @@ class VoyagesCommand {
         }
         else{
             const voyage = this.voyagesRepository.read(voyageName);
+            if(!voyage)
+                return await interaction.choiceNotExistsError(voyageName);
+                               
             embed = this.embedBuilder.createSingleSubjectEmbed(voyage.name, voyage.description, voyage.icon,voyage.url);
         }
 

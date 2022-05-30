@@ -2,6 +2,7 @@ const { registerApplicationCommands } = require ('./utils/registercommands');
 const { Client, Collection, Intents } = require('discord.js');
 const dotenv = require('dotenv');
 const { ServiceContainer } = require('./services/serviceContainer');
+const { DiscordInteractionHandler } = require('./utils/discordInteractionHandler');
 
 dotenv.config();
 
@@ -34,7 +35,7 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		await command.execute(interaction);
+		await command.execute(new DiscordInteractionHandler(interaction));
 	} catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });

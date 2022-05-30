@@ -10,5 +10,29 @@
         "description": "Interact with Galleon Structured products Here",
         "url": "https://app.galleon.community/",
         "icon": "galleon.png"
+    },
+    "cursedpirates": {
+        "name": "Cursed Pirates",
+        "description": "Summon the cursed and sail the high seas with these pirate NFTs",
+        "url": "https://cursedpirates.xyz/",
+        "icon": "pirates.png"
+    },
+    "fdc": {
+        "name": "Flying Dutchman Capital",
+        "description": "Web3, DeFi & community investing through Galleon treasury diversification and angels.",
+        "url": "https://flyingdutchman.capital/",
+        "icon": "fdc.png"
+    },
+    "blog": {
+        "name": "Blog",
+        "description": "See the latest Galleon News",
+        "url": "https://blog.galleon.community/",
+        "icon": "galleon.png"
+    },
+    "documentation": {
+        "name": "documentation",
+        "description": "Read Galleon's documentation",
+        "url": "https://docs.galleon.community/",
+        "icon": "glossary.png"
     }
 }

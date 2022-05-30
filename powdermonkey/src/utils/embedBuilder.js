@@ -34,7 +34,8 @@ class EmbedBuilder{
             .setColor('#040728')
             .setURL(url)],
             components: [actionRow],
-            files: [file]
+            files: [file],
+            ephemeral: true
         }
     }
 
@@ -59,7 +60,8 @@ class EmbedBuilder{
 
             return {
                 embeds: [embed],
-                files: [file]
+                files: [file],
+                ephemeral: true
             };
     }
 
@@ -95,7 +97,8 @@ class EmbedBuilder{
             content: "[\u200B](" + mediaEmbed + ")",
             components: [actionRow],
             embeds: [embed],
-            files: [file]
+            files: [file],
+            ephemeral: true
         };
     }
 }

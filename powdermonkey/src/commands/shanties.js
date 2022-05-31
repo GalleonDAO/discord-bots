@@ -49,7 +49,7 @@ class ShantiesCommand {
 
         //discord won't render link embeds if the response also contains a message embed
         //this fires our embed and then follows up with a hidden character masking the link to the media embed
-        await interaction.followUp(embed.content); 
+        await interaction.followUp({ content: embed.content, ephemeral: true}); 
     }
 }
 

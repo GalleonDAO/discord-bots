@@ -7,15 +7,19 @@ const { ContributeCommand } = require('../commands/contribute');
 const { ShantiesCommand } = require('../commands/shanties');
 const { WhitelistCommand } = require('../commands/whitelist');
 const { RoleplayCommand } = require('../commands/roleplay');
+const { LogWrapper } = require('../utils/logWrapper');
+const dotenv = require('dotenv');
 
 class ServiceContainer{
     #services = {};
     #commands = {};
+
     constructor(){
         this.#buildServiceContainer();
     }
 
     #buildServiceContainer(){
+        dotenv.config(); //TODO: Moving this to a contained class would be more secure but it works for now
         this.#configureServices();
         this.#configureCommands();
     }
@@ -29,8 +33,8 @@ class ServiceContainer{
         this.#services['whitelistRepository']  = new JsonRepository('../configuration/whitelist.json');
         this.#services['glossaryRepository']   = new JsonRepository('../configuration/glossary.json');
         this.#services['embedBuilder']         = new EmbedBuilder();
+        this.#services['logger']               = new LogWrapper(process.env['MONITORING_API_KEY']);
     }
-
     #configureCommands(){
         try{
             this.#commands['links']      = new LinksCommand(this.#services['linksRepository'],this.#services['embedBuilder']);
@@ -54,6 +58,11 @@ class ServiceContainer{
     getCommand(commandName){
         return this.#commands[commandName];
     }
+
+    getConfigurationOption(optionName){
+        return process.env[optionName];
+    }
+
     getCommandsList(){
         return Object.keys(this.#commands);
     }

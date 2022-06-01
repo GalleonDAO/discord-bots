@@ -1,18 +1,16 @@
 const { registerApplicationCommands } = require ('./utils/registercommands');
 const { Client, Collection, Intents } = require('discord.js');
-const dotenv = require('dotenv');
 const { ServiceContainer } = require('./services/serviceContainer');
 const { DiscordInteractionHandler } = require('./utils/discordInteractionHandler');
 
-dotenv.config();
-
-const DISCORD_API_TOKEN = process.env.DISCORD_API_TOKEN
-const CLIENT_ID = process.env.APPLICATION_ID
-const GUILD_ID = process.env.GUILD_ID
-
 const serviceContainer = new ServiceContainer();
 
+const DISCORD_API_TOKEN = serviceContainer.getConfigurationOption('DISCORD_API_TOKEN');
+const CLIENT_ID = serviceContainer.getConfigurationOption('APPLICATION_ID');
+const GUILD_ID = serviceContainer.getConfigurationOption('GUILD_ID');
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] })
+const logger = serviceContainer.getService('logger');
 
 client.commands = new Collection();
 
@@ -35,6 +33,12 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
+		logger.logCounter(interaction.commandName, {
+			username: interaction.member.displayName,
+			subcommand: interaction.options._subcommand? interaction.options._subcommand: '',
+			[interaction.options.data[0]? interaction.options.data[0].name : 'params']: interaction.options.data[0]? interaction.options.data[0].value: 'none'
+		});
+		
 		await command.execute(new DiscordInteractionHandler(interaction));
 	} catch (error) {
 		console.error(error);

@@ -100,14 +100,9 @@ module.exports = { LogWrapper };
 
 /**
  * @typedef {Object} LoggingOptions
- * @property {string} API_KEY
- * @property {string} MONITORING_URL
- * @property {string} LOGS_ENDPOINT
- * @property {string} COUNTERS_ENDPOINT
- * @property {string} TIMERS_ENDPOINT
- * @property {boolean} FILE_LOGGING
- * @property {boolean} AZURE_LOGGING
- * @property {boolean} CONSOLE_LOGGING
+ * @property {AzureLoggingOptions} azureLoggingOptions
+ * @property {FileLoggingOptions} fileLoggingOptions
+ * @property {ConsoleLoggingOptions} consoleLoggingOptions
  */
 
 /**

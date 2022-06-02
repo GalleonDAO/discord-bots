@@ -9,6 +9,7 @@ const { WhitelistCommand } = require('../commands/whitelist');
 const { RoleplayCommand } = require('../commands/roleplay');
 const { LogWrapper } = require('../utils/logWrapper');
 const dotenv = require('dotenv');
+const appsettings = require('../configuration/appsettings.json');
 
 class ServiceContainer{
     #services = {};
@@ -20,11 +21,25 @@ class ServiceContainer{
 
     #buildServiceContainer(){
         dotenv.config(); //TODO: Moving this to a contained class would be more secure but it works for now
-        this.#configureServices();
-        this.#configureCommands();
+        this.#registerServices();
+        this.#registerCommands();
     }
 
-    #configureServices(){
+    #addLogging(){
+        /**
+         * @type {import('../utils/logWrapper').loggingOptions}
+         */
+        let loggingOptions = {
+            azureloggingOptions : appsettings.AZURE_LOGGING,
+            fileloggingOptions : appsettings.FILE_LOGGING,
+            consoleloggingOptions : appsettings.CONSOLE_LOGGING
+        };
+
+        loggingOptions.azureloggingOptions.API_KEY = process.env.API_KEY;
+        this.#services['logger'] = new LogWrapper(loggingOptions);
+    }
+
+    #registerServices(){
         this.#services['linksRepository']      = new JsonRepository('../configuration/links.json');
         this.#services['productsRepository']   = new JsonRepository('../configuration/products.json');
         this.#services['voyagesRepository']    = new JsonRepository('../configuration/voyages.json');
@@ -33,9 +48,11 @@ class ServiceContainer{
         this.#services['whitelistRepository']  = new JsonRepository('../configuration/whitelist.json');
         this.#services['glossaryRepository']   = new JsonRepository('../configuration/glossary.json');
         this.#services['embedBuilder']         = new EmbedBuilder();
-        this.#services['logger']               = new LogWrapper(process.env['MONITORING_API_KEY']);
+
+        this.#addLogging();
     }
-    #configureCommands(){
+
+    #registerCommands(){
         try{
             this.#commands['links']      = new LinksCommand(this.#services['linksRepository'],this.#services['embedBuilder']);
             this.#commands['products']   = new ProductsCommand(this.#services['productsRepository'],this.#services['embedBuilder']);

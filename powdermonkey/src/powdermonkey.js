@@ -2,6 +2,7 @@ const { registerApplicationCommands } = require ('./utils/registercommands');
 const { Client, Collection, Intents } = require('discord.js');
 const { ServiceContainer } = require('./services/serviceContainer');
 const { DiscordInteractionHandler } = require('./utils/discordInteractionHandler');
+const { KNOWN_LABELS } = require('./services/azureLoggingService');
 
 const serviceContainer = new ServiceContainer();
 
@@ -33,7 +34,8 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		logger.logCounter(interaction.commandName, {
+		logger.logCounter(KNOWN_LABELS.COMMAND_USED, {
+			command: interaction.commandName,
 			username: interaction.member.displayName,
 			subcommand: interaction.options._subcommand? interaction.options._subcommand: 'none',
 			[interaction.options.data[0]? interaction.options.data[0].name : 'params']: interaction.options.data[0]? interaction.options.data[0].value: 'none'

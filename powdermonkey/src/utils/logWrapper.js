@@ -13,7 +13,7 @@ class LogWrapper{
      * @param {String} apiKey used to access Galleon logging endpoint
      * @param {LoggingOptions} loggingOptions 
      */
-    constructor(apiKey, loggingOptions){
+    constructor(loggingOptions){
         if(loggingOptions.CONSOLE_LOGGING)
             this.#loggers.push(this.#getFileLogger());
         if(loggingOptions.AZURE_LOGGING)

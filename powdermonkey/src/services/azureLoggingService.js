@@ -21,9 +21,10 @@ const KNOWN_SERVICES = {
 class AzureLoggingService{
     #loggingOptions;
     #headers;
+    
     /**
      * Service to connect and log to Galleon's azure monitoring
-     * @param {LoggingOptions} LoggingOptions
+     * @param {AzureLoggingOptions} loggingOptions
      */
     constructor(loggingOptions){
         this.#loggingOptions = loggingOptions;
@@ -134,7 +135,7 @@ module.exports = {
 };
 
 /**
- * @typedef {import('../utils/logWrapper.js').LoggingOptions} LoggingOptions
+ * @typedef {import('../utils/logWrapper.js').AzureLoggingOptions} AzureLoggingOptions
  */
 /**
  * @typedef {Object} MessagePayload

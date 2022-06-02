@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const { Headers } = require('node-fetch');
 
 const HEADER_KEYS = {
     SUBSCRIPTION: 'Ocp-Apim-Subscription-Key',
@@ -13,14 +14,14 @@ const LOG_SEVERITY = {
 };
 const KNOWN_LABELS ={
     COMMAND_USED: 'COMMAND USED'
-}
+};
 const KNOWN_SERVICES = {
     POWDER_MONKEY: 'POWDER_MONKEY'
-}
+};
 
 class AzureLoggingService{
     #loggingOptions;
-    #headers={};
+    #headers;
 
     /**
      * Service to connect and log to Galleon's azure monitoring
@@ -28,9 +29,11 @@ class AzureLoggingService{
      */
     constructor(loggingOptions){
         this.#loggingOptions = loggingOptions;
-        this.#headers[HEADER_KEYS.SUBSCRIPTION]= loggingOptions.API_KEY;
-        this.#headers[HEADER_KEYS.TRACE] = 'true';
-        this.#headers['Content-Type']= 'application/json';
+        this.#headers = new Headers({
+            [HEADER_KEYS.SUBSCRIPTION] : loggingOptions.API_KEY,
+            [HEADER_KEYS.TRACE] : true,
+            'Content-Type' : "application/json"
+        });
     }
 
     /**
@@ -73,15 +76,15 @@ class AzureLoggingService{
     async logCounter(payload){
         const loggerUrl = this.#loggingOptions.MONITORING_URL + this.#loggingOptions.COUNTERS_ENDPOINT
         return await fetch(loggerUrl, {
-          method: 'POST',
-          headers: this.#headers,
-          body: JSON.stringify({
-            ServiceName: payload.serviceName,
-            Environment: payload.environment,
-            Label: payload.label,
-            Metadata: payload.metadata,
-          }),
-        }).catch((err) => {
+            method: 'POST',
+            headers: this.#headers,
+            body: JSON.stringify({
+              ServiceName: payload.serviceName,
+              Environment: payload.environment,
+              Label: payload.label,
+              Metadata: payload.metadata,
+            }),
+          }).catch((err) => {
           console.log(err)
           this.logMessage({
             serviceName: payload.serviceName,

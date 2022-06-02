@@ -41,8 +41,8 @@ class LogWrapper{
 
     logCounter(commandName, metadata){
         const payload = {
-            ServiceName: SERVICE_NAME,
-            Environment: this.#ENVIRONMENT,
+            serviceName: SERVICE_NAME,
+            environment: this.#ENVIRONMENT,
             label: commandName,
             metadata: metadata
         }
@@ -53,8 +53,8 @@ class LogWrapper{
 
     logTimer(commandName, duration){
         const payload = {
-            ServiceName: SERVICE_NAME,
-            Environment: this.#ENVIRONMENT,
+            serviceName: SERVICE_NAME,
+            environment: this.#ENVIRONMENT,
             label: commandName,
             duration: duration
         };

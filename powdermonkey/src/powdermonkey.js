@@ -35,7 +35,7 @@ client.on('interactionCreate', async interaction => {
 	try {
 		logger.logCounter(interaction.commandName, {
 			username: interaction.member.displayName,
-			subcommand: interaction.options._subcommand? interaction.options._subcommand: '',
+			subcommand: interaction.options._subcommand? interaction.options._subcommand: 'none',
 			[interaction.options.data[0]? interaction.options.data[0].name : 'params']: interaction.options.data[0]? interaction.options.data[0].value: 'none'
 		});
 		

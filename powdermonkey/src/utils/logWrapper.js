@@ -70,22 +70,25 @@ class LogWrapper{
      * @returns 
      */
     #getFileLogger(fileLoggingOptions){
-        return {
-            transport: pino.transport({
-                target: 'pino/file',
-                options: { destination: fileLoggingOptions.FILE_PATH}
-            }),
-            logger: pino(this.transport),
+        const transport = pino.transport({
+            target: 'pino/file',
+            options: { destination: fileLoggingOptions.FILE_PATH}
+        });
+        
+        const fileLogger = {
+            logger: pino(transport),
             logMessage: (payload) =>{
-                this.logger.error(payload);
+                fileLogger.logger.error(payload);
             },
             logCounter: (payload) =>{
-                this.logger.info(payload);
+                fileLogger.logger.info(payload);
             },
             logTimer: (payload) =>{
-                this.logger.info(payload);
+                fileLogger.logger.info(payload);
             }
-        }
+        };
+
+        return fileLogger;
     }
 
     #getConsoleLogger(){

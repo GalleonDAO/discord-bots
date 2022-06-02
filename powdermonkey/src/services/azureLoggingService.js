@@ -20,17 +20,17 @@ const KNOWN_SERVICES = {
 
 class AzureLoggingService{
     #loggingOptions;
-    #headers;
-    
+    #headers={};
+
     /**
      * Service to connect and log to Galleon's azure monitoring
      * @param {AzureLoggingOptions} loggingOptions
      */
     constructor(loggingOptions){
         this.#loggingOptions = loggingOptions;
-        this.#headers.set(HEADER_KEYS.SUBSCRIPTION, loggingOptions.API_KEY);
-        this.#headers.set(HEADER_KEYS.TRACE, 'true');
-        this.#headers.set('Content-Type', 'application/json');
+        this.#headers[HEADER_KEYS.SUBSCRIPTION]= loggingOptions.API_KEY;
+        this.#headers[HEADER_KEYS.TRACE] = 'true';
+        this.#headers['Content-Type']= 'application/json';
     }
 
     /**

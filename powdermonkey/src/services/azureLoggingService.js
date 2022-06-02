@@ -41,7 +41,7 @@ class AzureLoggingService{
         const loggerUrl = this.#loggingOptions.MONITORING_URL + this.#loggingOptions.LOGS_ENDPOINT
         return await fetch(loggerUrl, {
           method: 'POST',
-          headers: this.headers,
+          headers: this.#headers,
           body: JSON.stringify({
             ServiceName: payload.serviceName,
             Environment: payload.environment,
@@ -74,7 +74,7 @@ class AzureLoggingService{
         const loggerUrl = this.#loggingOptions.MONITORING_URL + this.#loggingOptions.COUNTERS_ENDPOINT
         return await fetch(loggerUrl, {
           method: 'POST',
-          headers: this.headers,
+          headers: this.#headers,
           body: JSON.stringify({
             ServiceName: payload.serviceName,
             Environment: payload.environment,
@@ -104,7 +104,7 @@ class AzureLoggingService{
         const loggerUrl = this.#loggingOptions.MONITORING_URL + this.#loggingOptions.TIMERS_ENDPOINT
         return await fetch(loggerUrl, {
           method: 'POST',
-          headers: this.headers,
+          headers: this.#headers,
           body: JSON.stringify({
             ServiceName: payload.serviceName,
             Environment: payload.environment,

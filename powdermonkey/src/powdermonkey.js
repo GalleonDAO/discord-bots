@@ -2,7 +2,7 @@ const { registerApplicationCommands } = require ('./utils/registercommands');
 const { Client, Collection, Intents } = require('discord.js');
 const { ServiceContainer } = require('./services/serviceContainer');
 const { DiscordInteractionHandler } = require('./utils/discordInteractionHandler');
-const { KNOWN_LABELS } = require('./services/azureLoggingService');
+const { KNOWN_LABELS, LOG_SEVERITY} = require('./services/azureLoggingService');
 
 const serviceContainer = new ServiceContainer();
 
@@ -11,6 +11,10 @@ const CLIENT_ID = serviceContainer.getConfigurationOption('APPLICATION_ID');
 const GUILD_ID = serviceContainer.getConfigurationOption('GUILD_ID');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] })
+
+/**
+ * @type {import('./utils/logWrapper.js').LogWrapper}
+ */
 const logger = serviceContainer.getService('logger');
 
 client.commands = new Collection();
@@ -32,7 +36,7 @@ client.on('interactionCreate', async interaction => {
 	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
-
+	const interactionHandler = new DiscordInteractionHandler(interaction);
 	try {
 		logger.logCounter(KNOWN_LABELS.COMMAND_USED, {
 			command: interaction.commandName,
@@ -40,11 +44,12 @@ client.on('interactionCreate', async interaction => {
 			subcommand: interaction.options._subcommand? interaction.options._subcommand: 'none',
 			[interaction.options.data[0]? interaction.options.data[0].name : 'params']: interaction.options.data[0]? interaction.options.data[0].value: 'none'
 		});
-		
-		await command.execute(new DiscordInteractionHandler(interaction));
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+
+		await command.execute(interactionHandler);
+	} 
+	catch (error) {
+		logger.logMessage(LOG_SEVERITY, 'interactionCreate', error.stack, error.message);
+		await interactionHandler.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 

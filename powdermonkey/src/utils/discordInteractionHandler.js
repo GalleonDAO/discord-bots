@@ -1,3 +1,4 @@
+const { LOG_SEVERITY } = require('../services/azureLoggingService');
 /**
  * @typedef { Interaction, InteractionReplyOptions } = require("discord.js");
  */
@@ -7,18 +8,18 @@
  * Making the interaction private prevents bypassing global acitons
  */
 class DiscordInteractionHandler{
-    /**
-     * @type {Interaction}
-     */
     #interaction;
+    #logger;
 
     /**
      * This Handler is used for global error handling and decoration of discord interactions
      * Making the interaction private prevents bypassing global acitons
-     * @param {Interaction} interaction Discord Interaction Object
+     * @param {import('discord.js').Interaction } interaction
+     * @param {import('../utils/logWrapper.js').LogWrapper} logger
      */
-    constructor(interaction){
+    constructor(interaction, logger){
         this.#interaction = interaction;
+        this.#logger = logger;
     }
 
     /**
@@ -29,7 +30,7 @@ class DiscordInteractionHandler{
             await this.#interaction.reply(message);
         }
         catch(err){
-            await this.genericError(err);
+            await this.genericError(this.reply.name, err);
         }
     }
 
@@ -41,7 +42,7 @@ class DiscordInteractionHandler{
             await this.#interaction.followUp(message);
         }
         catch(err){
-            await this.genericError(err);
+            await this.genericError(this.followUp.name, err);
         }
     }
 
@@ -69,11 +70,10 @@ class DiscordInteractionHandler{
 
 
     /**
-     * @param {String} error 
+     * @param {Object} error 
      */
-    async genericError(error){
-        console.error(error);
-        //TODO: swap this for logging implementation
+    async genericError(functionName, error){
+        this.#logger.logMessage(LOG_SEVERITY.ERROR, functionName, error.stack, error.message);
         try{
             await this.#interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
         }
@@ -87,8 +87,7 @@ class DiscordInteractionHandler{
      * @param {String} commandName 
      */
     async commandNotExistsError(commandName){
-        console.error(`ERROR: Requested command: ${commandName} does not exist`);
-        //TODO: swap this for logging implementation
+        this.#logger.logMessage(LOG_SEVERITY.WARN, commandName, 'N/A', `ERROR: Requested command: ${commandName} does not exist`);
         try{
             await this.#interaction.reply({ content: `The specified command '${commandName}' does not exist`, ephemeral: true })
         }
@@ -101,9 +100,8 @@ class DiscordInteractionHandler{
     /**
      * @param {String} choiceName 
      */
-    async choiceNotExistsError(choiceName){
-        console.error(`ERROR: Requested choice: ${choiceName} does not exist`);
-        //TODO: swap this for logging implementation
+    async choiceNotExistsError(commandName, choiceName){
+        this.#logger.logMessage(LOG_SEVERITY.WARN, commandName, 'N/A', `ERROR: Requested choice: ${choiceName} does not exist for command: ${commandName}`);
         try{
             await this.#interaction.reply({ content: `The specified choice '${choiceName}' does not exist`, ephemeral: true })
         }

@@ -3,9 +3,9 @@ const pino = require('pino');
 const { AzureLoggingService } = require('../services/azureLoggingService');
 
 const SERVICE_NAME = 'POWDER_MONKEY'; //TODO: replace this with KNOWN_SERVICE
-const ENVIRONMENT = process.env.NODE_ENV;
 class LogWrapper{
     #loggers = [];
+    #ENVIRONMENT;
 
     /**
      * Used to wrap Galleon's logging lib
@@ -14,17 +14,19 @@ class LogWrapper{
      * @param {LoggingOptions} loggingOptions 
      */
     constructor(loggingOptions){
-        if(loggingOptions.CONSOLE_LOGGING)
-            this.#loggers.push(this.#getFileLogger());
-        if(loggingOptions.AZURE_LOGGING)
-            this.#loggers.push(new AzureLoggingService(loggingOptions));
-        if(loggingOptions.push(this.#getConsoleLogger()));
+        this.#ENVIRONMENT = process.env.NODE_ENV;
+        if(loggingOptions?.fileLoggingOptions.ENABLED)
+            this.#loggers.push(this.#getFileLogger(loggingOptions.fileLoggingOptions));
+        if(loggingOptions?.azureLoggingOptions.ENABLED)
+            this.#loggers.push(new AzureLoggingService(loggingOptions.azureLoggingOptions));
+        if(loggingOptions?.consoleLoggingOptions.ENABLED)
+            this.#loggers.push(this.#getConsoleLogger(loggingOptions.consoleLoggingOptions));
     }
 
     logMessage(severity, functionName, exception, message){
         const payload = {
             serviceName: SERVICE_NAME,
-            environment: ENVIRONMENT,
+            environment: this.#ENVIRONMENT,
             timestamp: new Date().toUTCString(),
             severity: severity,
             functionName: functionName,
@@ -40,7 +42,7 @@ class LogWrapper{
     logCounter(commandName, metadata){
         const payload = {
             ServiceName: SERVICE_NAME,
-            Environment: ENVIRONMENT,
+            Environment: this.#ENVIRONMENT,
             label: commandName,
             metadata: metadata
         }
@@ -52,7 +54,7 @@ class LogWrapper{
     logTimer(commandName, duration){
         const payload = {
             ServiceName: SERVICE_NAME,
-            Environment: ENVIRONMENT,
+            Environment: this.#ENVIRONMENT,
             label: commandName,
             duration: duration
         };
@@ -62,11 +64,16 @@ class LogWrapper{
         });
     }
 
-    #getFileLogger(){
+    /**
+     * 
+     * @param {FileLoggingOptions} fileLoggingOptions 
+     * @returns 
+     */
+    #getFileLogger(fileLoggingOptions){
         return {
             transport: pino.transport({
                 target: 'pino/file',
-                options: { destination: './log.json'}
+                options: { destination: fileLoggingOptions.FILE_PATH}
             }),
             logger: pino(this.transport),
             logMessage: (payload) =>{

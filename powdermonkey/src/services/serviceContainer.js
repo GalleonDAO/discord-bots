@@ -30,12 +30,12 @@ class ServiceContainer{
          * @type {import('../utils/logWrapper').loggingOptions}
          */
         let loggingOptions = {
-            azureloggingOptions : appsettings.AZURE_LOGGING,
-            fileloggingOptions : appsettings.FILE_LOGGING,
-            consoleloggingOptions : appsettings.CONSOLE_LOGGING
+            azureLoggingOptions : appsettings.AZURE_LOGGING,
+            fileLoggingOptions : appsettings.FILE_LOGGING,
+            consoleLoggingOptions : appsettings.CONSOLE_LOGGING
         };
 
-        loggingOptions.azureloggingOptions.API_KEY = process.env.API_KEY;
+        loggingOptions.azureLoggingOptions.API_KEY = process.env.MONITORING_API_KEY;
         this.#services['logger'] = new LogWrapper(loggingOptions);
     }
 

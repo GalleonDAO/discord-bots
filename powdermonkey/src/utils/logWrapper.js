@@ -1,48 +1,132 @@
 
 const pino = require('pino');
+const { AzureLoggingService } = require('../services/azureLoggingService');
 
 const SERVICE_NAME = 'POWDER_MONKEY'; //TODO: replace this with KNOWN_SERVICE
 const ENVIRONMENT = process.env.NODE_ENV;
 class LogWrapper{
-    #logger;
+    #loggers = [];
 
     /**
      * Used to wrap Galleon's logging lib
      * formats inputs to standardised input and pushes to monitoring endpoint
-     * @param {String} apiKey used to access Galleon logging endpoint 
+     * @param {String} apiKey used to access Galleon logging endpoint
+     * @param {LoggingOptions} loggingOptions 
      */
-    constructor(apiKey){
-        const transport = pino.transport({
-            target: 'pino/file',
-            options: { destination: './log.json'}
-        });
-        this.#logger = pino(transport);
+    constructor(apiKey, loggingOptions){
+        if(loggingOptions.CONSOLE_LOGGING)
+            this.#loggers.push(this.#getFileLogger());
+        if(loggingOptions.AZURE_LOGGING)
+            this.#loggers.push(new AzureLoggingService(loggingOptions));
+        if(loggingOptions.push(this.#getConsoleLogger()));
     }
 
-    logMessage(){
-        throw new Error('Not Implemented');
+    logMessage(severity, functionName, exception, message){
+        const payload = {
+            serviceName: SERVICE_NAME,
+            environment: ENVIRONMENT,
+            timestamp: new Date().toUTCString(),
+            severity: severity,
+            functionName: functionName,
+            exception: exception,
+            message: message
+        };
+
+        this.#loggers.forEach(logger => {
+            logger.logMessage(payload);
+        });
     }
 
     logCounter(commandName, metadata){
-        this.#logger.info({
+        const payload = {
             ServiceName: SERVICE_NAME,
             Environment: ENVIRONMENT,
             label: commandName,
             metadata: metadata
+        }
+        this.#loggers.forEach(logger => {
+            logger.logCounter(payload);
         });
-
-        // logger.logCounter(`${interaction.member.displayName} used /${interaction.commandName} ${interaction.options.data[0]? `with params ${interaction.options.data[0].name}: ${interaction.options.data[0].value}`: ''}`)
     }
 
     logTimer(commandName, duration){
-        this.#logger.info({
+        const payload = {
             ServiceName: SERVICE_NAME,
             Environment: ENVIRONMENT,
             label: commandName,
             duration: duration
-        })
-        throw new Error('Not Implemented');
+        };
+
+        this.#loggers.forEach(logger => {
+            logger.logTimer(payload);
+        });
+    }
+
+    #getFileLogger(){
+        return {
+            transport: pino.transport({
+                target: 'pino/file',
+                options: { destination: './log.json'}
+            }),
+            logger: pino(this.transport),
+            logMessage: (payload) =>{
+                this.logger.error(payload);
+            },
+            logCounter: (payload) =>{
+                this.logger.info(payload);
+            },
+            logTimer: (payload) =>{
+                this.logger.info(payload);
+            }
+        }
+    }
+
+    #getConsoleLogger(){
+        return {
+            logMessage: (payload) =>{
+                console.error(payload);
+            },
+            logCounter: (payload) =>{
+                console.log(payload);
+            },
+            logTimer: (payload) =>{
+                console.log(payload);
+            }
+        }
     }
 }
 
 module.exports = { LogWrapper };
+
+/**
+ * @typedef {Object} LoggingOptions
+ * @property {string} API_KEY
+ * @property {string} MONITORING_URL
+ * @property {string} LOGS_ENDPOINT
+ * @property {string} COUNTERS_ENDPOINT
+ * @property {string} TIMERS_ENDPOINT
+ * @property {boolean} FILE_LOGGING
+ * @property {boolean} AZURE_LOGGING
+ * @property {boolean} CONSOLE_LOGGING
+ */
+
+/**
+ * @typedef {Object} AzureLoggingOptions
+ * @property {boolean} ENABLED
+ * @property {string} API_KEY
+ * @property {string} MONITORING_URL
+ * @property {string} LOGS_ENDPOINT
+ * @property {string} COUNTERS_ENDPOINT
+ * @property {string} TIMERS_ENDPOINT
+ */
+
+/**
+ * @typedef {Object} FileLoggingOptions
+ * @property {boolean} ENABLED
+ * @property {string} FILE_PATH
+ */
+
+/**
+ * @typedef {Object} ConsoleLoggingOptions
+ * @property {boolean} ENABLED
+ */

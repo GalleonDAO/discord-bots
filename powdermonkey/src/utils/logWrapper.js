@@ -15,12 +15,20 @@ class LogWrapper{
      */
     constructor(loggingOptions){
         this.#ENVIRONMENT = process.env.NODE_ENV;
-        if(loggingOptions?.fileLoggingOptions.ENABLED)
+        if(loggingOptions?.fileLoggingOptions.ENABLED){
+            console.log("Adding File Logger");
             this.#loggers.push(this.#getFileLogger(loggingOptions.fileLoggingOptions));
-        if(loggingOptions?.azureLoggingOptions.ENABLED)
+            console.log("File Logging Enabled");
+        }
+        if(loggingOptions?.azureLoggingOptions.ENABLED){
+            console.log("Adding Azure Logger")
             this.#loggers.push(new AzureLoggingService(loggingOptions.azureLoggingOptions));
-        if(loggingOptions?.consoleLoggingOptions.ENABLED)
+            console.log("Azure Logging Enabled");
+        }
+        if(loggingOptions?.consoleLoggingOptions.ENABLED){
             this.#loggers.push(this.#getConsoleLogger(loggingOptions.consoleLoggingOptions));
+            console.log("Enabled Console Logging");
+        }
     }
 
     logMessage(severity, functionName, exception, message){

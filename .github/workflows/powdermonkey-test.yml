@@ -45,6 +45,22 @@ jobs:
           FILE_LOGGING.ENABLED: false
           AZURE_LOGGING.ENABLED: false
 
+      - name: Build and push powdermonkey image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: ./powdermonkey
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push pricebots image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: ./pricebots
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
       - name: Print tags
         run: echo "Tags are ${{ steps.meta.outputs.tags }}"
 
@@ -75,7 +91,6 @@ jobs:
             galleoncore/powdermonkey
           flavor: |
             prefix=logging
-            latest=true
           tags: |
             type=semver,pattern={{version}}
 
@@ -88,6 +103,14 @@ jobs:
           FILE_LOGGING.ENABLED: false
           AZURE_LOGGING.ENABLED: true
           AZURE_LOGGING.MONITORING_URL: ${{ secrets.AZURE_MONITORING_URL}}
+
+      - name: Build and push powdermonkey production image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: ./powdermonkey
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
       
       - name: Print tags
         run: echo "Tags are ${{ steps.meta.outputs.tags }}"

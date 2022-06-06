@@ -34,8 +34,20 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern=lts-alpine-{{version}}
 
+      - name: Substitute variables
+        uses: microsoft/variable-substitution@v1 
+        with:
+          files: '/powdermonkey/src/configuration/appsettings.json'
+        env:
+          CONSOLE_LOGGING.ENABLED: true
+          FILE_LOGGING.ENABLED: false
+          AZURE_LOGGING.ENABLED: false
+
       - name: Print tags
         run: echo "Tags are ${{ steps.meta.outputs.tags }}"
 
       - name: Print labels
         run: echo "Labels are ${{ steps.meta.outputs.labels }}"
+
+      - name: Print appsettings
+        run: cat /powdermonkey/src/configuration/appsettings.json

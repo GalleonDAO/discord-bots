@@ -37,7 +37,7 @@ jobs:
       - name: Substitute variables
         uses: microsoft/variable-substitution@v1 
         with:
-          files: '/powdermonkey/src/configuration/appsettings.json'
+          files: './powdermonkey/src/configuration/appsettings.json'
         env:
           CONSOLE_LOGGING.ENABLED: true
           FILE_LOGGING.ENABLED: false

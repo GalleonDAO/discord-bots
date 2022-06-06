@@ -23,12 +23,23 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
+      - name: Extract metadata (tags, labels) for powdermonkey
+        id: meta_powdermonkey
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: |
             name=galleoncore/powdermonkey
+          flavor: |
+            latest=true
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern=lts-alpine-{{version}}
+
+      - name: Extract metadata (tags, labels) for pricebot
+        id: meta_pricebot
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: |
             name=galleoncore/pricebot
           flavor: |
             latest=true
@@ -50,22 +61,16 @@ jobs:
         with:
           context: ./powdermonkey
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta_powdermonkey.outputs.tags }}
+          labels: ${{ steps.meta_powdermonkey.outputs.labels }}
 
       - name: Build and push pricebots image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./pricebots
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Print tags
-        run: echo "Tags are ${{ steps.meta.outputs.tags }}"
-
-      - name: Print labels
-        run: echo "Labels are ${{ steps.meta.outputs.labels }}"
+          tags: ${{ steps.meta_pricebot.outputs.tags }}
+          labels: ${{ steps.meta_pricebot.outputs.labels }}
 
  build-and-publish-production:
     runs-on: ubuntu-latest

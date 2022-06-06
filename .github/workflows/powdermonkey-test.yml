@@ -2,10 +2,8 @@ name: Release
 
 on:
   push:
-    branches:
-      - 'workflows'
     tags:
-      - 'v*'
+      - 'powdermonkey-v*'
 
 jobs:
 
@@ -39,7 +37,7 @@ jobs:
         with:
           files: './powdermonkey/src/configuration/appsettings.json'
         env:
-          CONSOLE_LOGGING.ENABLED: true
+          CONSOLE_LOGGING.ENABLED: false
           FILE_LOGGING.ENABLED: false
           AZURE_LOGGING.ENABLED: true
           AZURE_LOGGING.MONITORING_URL: ${{ secrets.AZURE_MONITORING_URL}}

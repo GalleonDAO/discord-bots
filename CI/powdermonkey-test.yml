@@ -1,0 +1,20 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'hello*'
+
+jobs:
+
+  build-and-publish-public:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3

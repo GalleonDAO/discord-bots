@@ -32,7 +32,7 @@ jobs:
           flavor: |
             latest=true
           tags: |
-            type=semver,pattern={{version}}
+            type=semver,pattern=v{{version}}
             type=semver,pattern=lts-alpine-{{version}}
 
       - name: Extract metadata (tags, labels) for pricebot

@@ -41,7 +41,8 @@ jobs:
         env:
           CONSOLE_LOGGING.ENABLED: true
           FILE_LOGGING.ENABLED: false
-          AZURE_LOGGING.ENABLED: false
+          AZURE_LOGGING.ENABLED: true
+          AZURE_LOGGING.MONITORING_URL: ${{ secrets.AZURE_MONITORING_URL}}
 
       - name: Print tags
         run: echo "Tags are ${{ steps.meta.outputs.tags }}"

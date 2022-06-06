@@ -1,0 +1,14 @@
+{
+    "fdc":{
+        "name": "Flying Dutchman Capital",
+        "description": "Investing in Web3 token economies through Galleon DAO treasury diversifications and angel investing.",
+        "url": "https://flyingdutchman.capital/",
+        "icon": "fdc.png"
+    },
+    "cursedpirates":{
+        "name": "Cursed Pirates",
+        "description": "Bridging NFTs into DeFi with Galleons' very own on-theme NFT project.",
+        "url": "https://cursedpirates.xyz/",
+        "icon": "pirates.png"
+    }
+}

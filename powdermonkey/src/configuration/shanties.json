@@ -1,0 +1,32 @@
+{
+    "wellerman": {
+        "name": "Wellerman",
+        "artist": "The Longest Johns",
+        "description": "A pirate classic, nothing makes you feel the ocean breeze in your hair like a whaling shanty",
+        "icon": "crown.png",
+        "links": {
+            "Spotify": "https://open.spotify.com/track/6ZblDQM0Gq0daaPAwuHOmD",
+            "Youtube": "https://www.youtube.com/watch?v=-FIf3fXPF6Q"
+        }
+    },
+    "jolirouge": {
+        "name": "Joli Rouge",
+        "artist": "The Dreadnoughts",
+        "description": "Something a bit more upbeat, slam your flagon's and chug 'til ye drop.",
+        "icon": "crown.png",
+        "links": {
+            "Spotify": "https://open.spotify.com/track/5tLHdDudxoCVAs89X6G5dL",
+            "Youtube": "https://www.youtube.com/watch?v=Yeh1S_kl8YI"
+        }
+    },
+    "hoisthecolours": {
+        "name": "Hoist the Colours",
+        "artist": "Colm R. McGuinness",
+        "description": "Reaffirm your loyalty to the pirate way and feel this deep, bellowing rendition inspire you to take up arms.",
+        "icon": "davyjones.png",
+        "links": {
+            "Spotify": "https://open.spotify.com/track/2H0RTZvOwdFcpf8GWattYH",
+            "Youtube": "https://www.youtube.com/watch?v=IX0r4H2i9uY"
+        }
+    }
+}

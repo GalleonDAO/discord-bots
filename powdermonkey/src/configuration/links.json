@@ -1,0 +1,44 @@
+{
+  "galleoncommunity": {
+    "name": "Galleon Community",
+    "description": "The central page for all things Galleon.",
+    "url": "https://galleon.community/",
+    "icon": "galleon.png"
+  },
+  "galleondapp": {
+    "name": "Galleon Dapp",
+    "description": "Buy and sell Galleons' decentralised investor products.",
+    "url": "https://app.galleon.community/",
+    "icon": "galleon.png"
+  },
+  "cursedpirates": {
+    "name": "Cursed Pirates",
+    "description": "Summon the cursed and sail the high seas with these pirate NFTs tied into Galleon governance.",
+    "url": "https://cursedpirates.xyz/",
+    "icon": "pirates.png"
+  },
+  "fdc": {
+    "name": "Flying Dutchman Capital",
+    "description": "Web3, DeFi & community investing through Galleon treasury diversification and angels.",
+    "url": "https://flyingdutchman.capital/",
+    "icon": "fdc.png"
+  },
+  "blog": {
+    "name": "Blog",
+    "description": "See the latest Galleon news.",
+    "url": "https://blog.galleon.community/",
+    "icon": "galleon.png"
+  },
+  "documentation": {
+    "name": "Documentation",
+    "description": "Read Galleon's documentation.",
+    "url": "https://galleon.notion.site/Ahoy-81428ec6bb5748e7abe357859e62db76",
+    "icon": "glossary.png"
+  },
+  "twitter": {
+    "name": "Twitter",
+    "description": "Follow the official Galleon Twitter account.",
+    "url": "https://twitter.com/galleondao",
+    "icon": "galleon.png"
+  }
+}

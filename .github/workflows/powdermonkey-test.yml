@@ -30,6 +30,8 @@ jobs:
           images: |
             name=galleoncore/powdermonkey
             name=galleoncore/pricebot
+          flavor: |
+            latest=true
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern=lts-alpine-{{version}}
@@ -73,6 +75,7 @@ jobs:
             galleoncore/powdermonkey
           flavor: |
             prefix=logging
+            latest=true
           tags: |
             type=semver,pattern={{version}}
 

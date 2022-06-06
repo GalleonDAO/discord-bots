@@ -11,3 +11,4 @@ coverage
 .vscode
 .eslintrc.json
 powdermonkey/logs.json
+pricebots/Create-DockerImages.ps1

@@ -9,3 +9,6 @@ GET {{coingecko_url}}/coins/{{congecko_tokenId}}
 
 ### @name TokenSets_Ethmaxy
 GET {{tokensets_url}}/funds/{{tokensets_tokenId}}
+
+### @name TokenSets_Ethmaxy_Daily
+GET {{tokensets_url}}fund_historicals/{{tokensets_tokenId}}?interval=day&currency=usd

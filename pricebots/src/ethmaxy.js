@@ -1,10 +1,16 @@
-const { 
-  numberWithCommas,
+const {
   fetchCoingeckoData,
-  fetchTokensetsData 
-}                      = require('./helpers/utils')
-const { Client }       = require('discord.js')
-const dotenv           = require('dotenv')
+  fetchTokensetsData,
+  tokensetsIsValid,
+  fetchTokensetsChange
+} = require('./helpers/utils')
+const {
+  getNickname,
+  getActivity,
+  setDiscordText
+} = require('./helpers/discordhelpers')
+const Client = require('discord.js')
+const dotenv = require('dotenv')
 
 const COINGECKO_TOKENID = 'eth-max-yield-index'
 const TOKENSETS_TOKENID = 'ethmaxy'
@@ -36,29 +42,28 @@ const updateBot = async () => {
     return
   }
 
-  const { change } = coingeckoData
-  const { 
-    price,
-    symbol,
-    marketCap
-  } = tokensetsData
+  if (tokensetsIsValid(tokensetsData)) {
+    let {
+      change
+    } = coingeckoData
+    const {
+      price,
+      symbol,
+      marketCap
+    } = tokensetsData
 
-  console.log('Fetched: ' + symbol, price, marketCap)
+    console.log('Fetched: ' + symbol, price, marketCap)
 
-  client.guilds.cache.forEach(async (guild) => {
-    const botMember = guild.me
-    await botMember.setNickname(
-      `${
-        price
-          ? '$' + numberWithCommas(price) + ' | ' + change.toFixed(2) + '%'
-          : ''
-      }`,
-    )
-  })
-  if (client.user) {
-    client.user.setActivity(
-      'MC: ' + numberWithCommas(marketCap),
-      { type: 'WATCHING' },
-    )
+    if(!change){
+      console.log('No Price change available for Coingecko, using fallback');
+      change = await fetchTokensetsChange(TOKENSETS_TOKENID);
+      if(!change)
+        console.log('No Price change available for Tokensets, failing over');
+    }
+
+    const nickname = getNickname(price, change);
+    const activity = getActivity(marketCap);
+    
+    setDiscordText(client, nickname, activity);
   }
 }

@@ -23,14 +23,18 @@ jobs:
           node-version: 16
 
       - name: Install powdermonkey Dependencies
-        run: npm install -D ./powdermonkey
+        run: npm install -D
+        working-directory: ./powdermonkey
       - name: Run Powdermonkey tests
-        run: npm test ./powdermonkey
+        run: npm test
+        working-directory: ./powdermonkey
         
       - name: Install Pricebot Dependencies 
-        run: npm install -D ./pricebots
+        run: npm install -D
+        working-directory: ./pricebots
       - name: Run Pricebot tests
-        run: npm test ./pricebots
+        run: npm test
+        working-directory: ./pricebots
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -103,9 +107,11 @@ jobs:
           node-version: 16
 
       - name: Install powdermonkey Dependencies
-        run: npm install -D ./powdermonkey
+        run: npm install -D
+        working-directory: ./powdermonkey
       - name: Run Powdermonkey tests
-        run: npm test ./powdermonkey
+        run: npm test
+        working-directory: ./powdermonkey
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9

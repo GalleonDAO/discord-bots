@@ -33,6 +33,7 @@ jobs:
             latest=true
           tags: |
             type=semver,pattern={{version}}
+            type=semver,pattern=lts-alpine-{{version}}
 
       - name: Extract metadata (tags, labels) for pricebot
         id: meta_pricebot
@@ -44,6 +45,7 @@ jobs:
             latest=true
           tags: |
             type=semver,pattern={{version}}
+            type=semver,pattern=lts-alpine-{{version}}
 
       - name: Substitute variables
         uses: microsoft/variable-substitution@v1 

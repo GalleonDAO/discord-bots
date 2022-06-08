@@ -3,6 +3,7 @@ const {
     it
 }            = require('mocha');
 const { ContributeCommand } = require('../../src/commands/contribute');
+const { EmbedBuilderMock } = require('../embedBuilderMock');
 const expect = require('chai').expect;
 
 const contributeRepositoryMock = {
@@ -22,27 +23,6 @@ const contributeRepositoryMock = {
     }
 }
 
-const embedBuilderMock = {
-    outputs:{},
-
-    createSingleSubjectEmbed(title, description, thumbnail, url){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['url'] = url;
-
-        return 'embed';
-    },
-    createMultiSubjectEmbed(title, description, thumbnail, fields){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['fields'] = fields;
-
-        return 'embed';
-    }
-}
-
 
 describe("Contribute Command", function() {
     describe("execute()", function(){
@@ -58,6 +38,7 @@ describe("Contribute Command", function() {
             url: contributeConfig.url
            };
            const expectedReply = "embed";
+           const embedBuilderMock = new EmbedBuilderMock();
 
            const subject = new ContributeCommand(contributeRepositoryMock, embedBuilderMock);
 

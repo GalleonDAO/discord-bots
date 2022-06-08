@@ -3,6 +3,7 @@ const {
     it
 }            = require('mocha');
 const { ProductsCommand } = require('../../src/commands/products');
+const { EmbedBuilderMock } = require('../embedBuilderMock');
 const expect = require('chai').expect;
 
 const productsRepositoryMock = {
@@ -33,28 +34,6 @@ const productsRepositoryMock = {
     }
 }
 
-const embedBuilderMock = {
-    outputs:{},
-
-    createSingleSubjectEmbed(title, description, thumbnail, url){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['url'] = url;
-
-        return 'embed';
-    },
-    createMultiSubjectEmbed(title, description, thumbnail, fields){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['fields'] = fields;
-
-        return 'embed';
-    }
-}
-
-
 describe("Products Command", function() {
     describe("execute()", function(){
         it("interaction has string Option -- Returns specific Product",
@@ -70,6 +49,7 @@ describe("Products Command", function() {
            };
             const expectedRequestedName = 'product';
             const expectedReply = "embed";
+            const embedBuilderMock = new EmbedBuilderMock();
 
             const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock);
 
@@ -101,6 +81,7 @@ describe("Products Command", function() {
            };
            const expectedRequestedName = 'product';
            const expectedReply = "embed";
+           const embedBuilderMock = new EmbedBuilderMock();
 
            const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock);
 

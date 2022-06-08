@@ -28,10 +28,9 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: |
-            name=galleoncore/powdermonkey
+            galleoncore/powdermonkey
           flavor: |
             latest=true
-            prefix=V
           tags: |
             type=semver,pattern={{version}}
 
@@ -40,10 +39,9 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: |
-            name=galleoncore/pricebot
+            galleoncore/pricebot
           flavor: |
             latest=true
-            prefix=V
           tags: |
             type=semver,pattern={{version}}
 

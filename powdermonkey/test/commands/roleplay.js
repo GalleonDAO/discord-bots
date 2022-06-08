@@ -2,7 +2,7 @@ const {
     describe,
     it
 }            = require('mocha');
-const { RoleplayCommand } = require('../../src/commands/Roleplay');
+const { RoleplayCommand } = require('../../src/commands/roleplay');
 const { EmbedBuilderMock } = require('../embedBuilderMock');
 const expect = require('chai').expect;
 

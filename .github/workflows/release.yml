@@ -25,12 +25,12 @@ jobs:
       - name: Install powdermonkey Dependencies
         run: npm install -D ./powdermonkey
       - name: Run Powdermonkey tests
-        run: mocha --reporter spec ./powdermonkey
+        run: npm test ./powdermonkey
         
       - name: Install Pricebot Dependencies 
         run: npm install -D ./pricebots
       - name: Run Pricebot tests
-        run: mocha --reporter spec ./pricebots
+        run: npm test ./pricebots
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -105,7 +105,7 @@ jobs:
       - name: Install powdermonkey Dependencies
         run: npm install -D ./powdermonkey
       - name: Run Powdermonkey tests
-        run: mocha --reporter spec ./powdermonkey
+        run: npm test ./powdermonkey
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9

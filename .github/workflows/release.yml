@@ -17,6 +17,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install Node
+        uses: actions/setup-node@v1
+
+      - name: Install powdermonkey Dependencies
+        run: npm install -D ./powdermonkey
+      - name: Run Powdermonkey tests
+        uses: run mocha --reporter spec ./powdermonkey
+        
+      - name: Install Pricebot Dependencies 
+        run: npm install -D ./pricebots
+      - name: Run Pricebot tests
+        uses: run mocha --reporter spec ./pricebots
+
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
@@ -81,6 +94,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+
+      - name: Install powdermonkey Dependencies
+        run: npm install -D ./powdermonkey
+      - name: Run Powdermonkey tests
+        uses: run mocha --reporter spec ./powdermonkey
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9

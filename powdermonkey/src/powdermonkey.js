@@ -36,7 +36,7 @@ client.on('interactionCreate', async interaction => {
 	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
-	const interactionHandler = new DiscordInteractionHandler(interaction);
+	const interactionHandler = new DiscordInteractionHandler(interaction, logger);
 	try {
 		logger.logCounter(KNOWN_LABELS.COMMAND_USED, {
 			command: interaction.commandName,
@@ -48,7 +48,7 @@ client.on('interactionCreate', async interaction => {
 		await command.execute(interactionHandler);
 	} 
 	catch (error) {
-		logger.logMessage(LOG_SEVERITY, 'interactionCreate', error.stack, error.message);
+		logger.logMessage(LOG_SEVERITY.ERROR, 'interactionCreate', error.stack, error.message);
 		await interactionHandler.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });

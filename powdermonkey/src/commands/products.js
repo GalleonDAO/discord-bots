@@ -1,17 +1,15 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-/**
- * @typedef {JsonRepository} = require('../services/jsonRepository');
- * @typedef {EmbedBuilder} = require('../utils/embedBuilder');
- */
 
 class ProductsCommand {
     /**
-     * @param {JsonRepository} productsRepository data title Title of the embed
-     * @param {EmbedBuilder} embedBuilder Description of the embed
+     * @param {import('../services/jsonRepository').JsonRepository} productsRepository data source
+     * @param {import('../utils/embedBuilder').EmbedBuilder} embedBuilder discord embed builder
+     * @param {import('../services/coingeckoService')} priceService product price fetching service
      */
-    constructor(productsRepository, embedBuilder) {
+    constructor(productsRepository, embedBuilder, priceService) {
         this.productsRepository = productsRepository;
         this.embedBuilder = embedBuilder;
+        this.priceService = priceService;
         this.data = this.getCommandBuilder();
     }
 
@@ -32,6 +30,15 @@ class ProductsCommand {
             });
     }
 
+    async getProductEmbed(productName, product){
+        const priceData = await this.priceService.fetchCoingeckoData(this.priceService.KNOWN_TOKENS[productName]);
+        return this.embedBuilder.createSingleSubjectEmbed(product.name,
+            product.description, 
+            product.icon, 
+            product.url, 
+            { Price: `${priceData?.price? `$${priceData.price}`: 'unavailable'}`, Change: `${priceData?.change? `${priceData.change}%`: 'unavailable'}`}); 
+    }
+
     async execute(interaction){
         const productName = interaction.getStringChoice('product');
         var embed;
@@ -44,8 +51,8 @@ class ProductsCommand {
             const product = this.productsRepository.read(productName);
             if(!product)
                 return await interaction.choiceNotExistsError(productName);
-                           
-            embed = this.embedBuilder.createSingleSubjectEmbed(product.name, product.description, product.icon, product.url);
+
+            embed = await this.getProductEmbed(productName,product);           
         }
         await interaction.reply(embed);
     }

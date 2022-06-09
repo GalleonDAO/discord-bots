@@ -45,13 +45,27 @@ describe("Products Command", function() {
                 title: expectedProduct.name,
                 description: expectedProduct.description,
                 thumbnail: expectedProduct.icon,
-                url: expectedProduct.url
+                url: expectedProduct.url,
+                fields: {Price: '$100', Change: '5%'}
            };
             const expectedRequestedName = 'product';
             const expectedReply = "embed";
-            const embedBuilderMock = new EmbedBuilderMock();
+            const expectedRequestedToken = "doubloon";
 
-            const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock);
+            const embedBuilderMock = new EmbedBuilderMock();
+            const priceServiceMock = {
+                outputs: {},
+                KNOWN_TOKENS: {
+                    "dbl" : "doubloon"
+                },
+                async fetchCoingeckoData(tokenId){
+                    this.outputs.requestedToken = tokenId;
+                    return {price: 100,symbol: 'dbl',circSupply: 10000000,change: 5}
+                }
+            };
+        
+
+            const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock, priceServiceMock);
 
             const interaction = {
                 getStringChoice(name){
@@ -67,6 +81,7 @@ describe("Products Command", function() {
             
             expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
             expect(outputs.requestedName).equal(expectedRequestedName);
+            expect(priceServiceMock.outputs.requestedToken).equal(expectedRequestedToken);
             expect(outputs.reply).equal(expectedReply);
         });
         it("interaction without string Option -- Returns all Products",
@@ -101,5 +116,57 @@ describe("Products Command", function() {
            expect(outputs.requestedName).equal(expectedRequestedName);
            expect(outputs.reply).equal(expectedReply);
        })
-    })
+    });
+    describe("getProductEmbed()", function(){
+        it("price data available -- returns price data with embed",
+        async function(){
+            const expectedFields = {
+                Price: "$100",
+                Change: "5%"
+            }
+
+            const embedBuilderMock = new EmbedBuilderMock();
+            const priceServiceMock = {
+                outputs: {},
+                KNOWN_TOKENS: {
+                    "dbl" : "doubloon"
+                },
+                async fetchCoingeckoData(tokenId){
+                    this.outputs.requestedToken = tokenId;
+                    return {price: 100,symbol: 'dbl',circSupply: 10000000,change: 5}
+                }
+            };
+
+            const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock, priceServiceMock);
+
+            await subject.getProductEmbed('dbl',productsRepositoryMock.read('dbl'));
+
+            expect(expectedFields).to.deep.equal(embedBuilderMock.outputs.fields);
+        });
+        it("price data not available -- returns unavailable with embed",
+        async function(){
+            const expectedFields = {
+                Price: "unavailable",
+                Change: "unavailable"
+            }
+
+            const embedBuilderMock = new EmbedBuilderMock();
+            const priceServiceMock = {
+                outputs: {},
+                KNOWN_TOKENS: {
+                    "dbl" : "doubloon"
+                },
+                async fetchCoingeckoData(tokenId){
+                    this.outputs.requestedToken = tokenId;
+                    return undefined
+                }
+            };
+
+            const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock, priceServiceMock);
+
+            await subject.getProductEmbed('dbl',productsRepositoryMock.read('dbl'));
+
+            expect(expectedFields).to.deep.equal(embedBuilderMock.outputs.fields);
+        });
+    });
 })

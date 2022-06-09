@@ -4,7 +4,7 @@ class ProductsCommand {
     /**
      * @param {import('../services/jsonRepository').JsonRepository} productsRepository data source
      * @param {import('../utils/embedBuilder').EmbedBuilder} embedBuilder discord embed builder
-     * @param {import('../services/coingeckoService')} priceService product price fetching service
+     * @param {import('../services/PriceService').PriceService} priceService product price fetching service
      */
     constructor(productsRepository, embedBuilder, priceService) {
         this.productsRepository = productsRepository;

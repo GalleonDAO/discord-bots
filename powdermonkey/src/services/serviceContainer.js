@@ -10,7 +10,7 @@ const { RoleplayCommand } = require('../commands/roleplay');
 const { LogWrapper } = require('../utils/logWrapper');
 const dotenv = require('dotenv');
 const appsettings = require('../configuration/appsettings.json');
-const { PriceService } = require('./coingeckoService');
+const { PriceService } = require('./PriceService');
 
 class ServiceContainer{
     #services = {};

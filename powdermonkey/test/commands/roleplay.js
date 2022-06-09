@@ -2,7 +2,8 @@ const {
     describe,
     it
 }            = require('mocha');
-const { RoleplayCommand } = require('../../src/commands/Roleplay');
+const { RoleplayCommand } = require('../../src/commands/roleplay');
+const { EmbedBuilderMock } = require('../embedBuilderMock');
 const expect = require('chai').expect;
 
 const glossaryRepositoryMock = {
@@ -15,7 +16,7 @@ const glossaryRepositoryMock = {
         }
     }
 };
-const embedBuilderMock = {};
+const embedBuilderMock = new EmbedBuilderMock();
 
 describe("Roleplay Command", function() {
     describe("execute()", function(){

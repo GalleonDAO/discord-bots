@@ -76,7 +76,7 @@ describe("Shanties Command", function() {
             links: expectedShanty.links
            };
            const expectedReply = {embeds: 'embed', content: 'content'};
-           const expectedFollowUp = "content";
+           const expectedFollowUp = { content: 'content', ephemeral: true };
 
            const subject = new ShantiesCommand(shantiesRepositoryMock, embedBuilderMock);
 
@@ -93,7 +93,7 @@ describe("Shanties Command", function() {
 
            expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
            expect(outputs.reply).to.deep.equal(expectedReply);
-           expect(outputs.followUp).equal(expectedFollowUp);
+           expect(outputs.followUp).to.deep.equal(expectedFollowUp);
        })
     })
 })

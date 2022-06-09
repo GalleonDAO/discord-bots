@@ -7,7 +7,7 @@
     "dev:ethmaxy": "nodemon src/ethmaxy.js",
     "start:dbl": "node src/dbl.js",
     "dev:dbl": "nodemon src/dbl.js",
-    "test": "mocha --reporter spec"
+    "test": "mocha --recursive --reporter spec test"
   },
   "keywords": [
     "discord",

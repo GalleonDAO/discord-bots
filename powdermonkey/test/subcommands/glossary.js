@@ -3,6 +3,7 @@ const {
     it
 }            = require('mocha');
 const { GlossarySubCommand } = require('../../src/commands/subcommands/glossary');
+const { EmbedBuilderMock } = require('../embedBuilderMock');
 const expect = require('chai').expect;
 
 const glossaryRepositoryMock = {
@@ -27,28 +28,6 @@ const glossaryRepositoryMock = {
     }
 }
 
-const embedBuilderMock = {
-    outputs:{},
-
-    createSingleSubjectEmbed(title, description, thumbnail, url){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['url'] = url;
-
-        return 'embed';
-    },
-    createMultiSubjectEmbed(title, description, thumbnail, fields){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['fields'] = fields;
-
-        return 'embed';
-    }
-}
-
-
 describe("Glossary SubCommand", function() {
     describe("execute()", function(){
         it("random subcommand -- Returns a random word",
@@ -64,6 +43,7 @@ describe("Glossary SubCommand", function() {
                     url: "https://www.thepirateking.com/terminology/terminology_rennfair_primer.htm",
             };
             const expectedReply = 'embed';
+            const embedBuilderMock = new EmbedBuilderMock();
 
             const subject = new GlossarySubCommand(glossaryRepositoryMock, embedBuilderMock);
 
@@ -94,6 +74,7 @@ describe("Glossary SubCommand", function() {
                    fields: glossaryRepositoryMock.readAll()
            };
            const expectedReply = 'embed';
+           const embedBuilderMock = new EmbedBuilderMock();
 
            const subject = new GlossarySubCommand(glossaryRepositoryMock, embedBuilderMock);
 

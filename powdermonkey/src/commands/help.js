@@ -43,8 +43,26 @@ class HelpCommand{
             embed.addField('/'+commandSummary[key].name, commandSummary[key].description, false);
             if(commandSummary[key].options){
                 Object.keys(commandSummary[key].options).forEach(optionKey=>{
-                    embed.addField(`Option: {${commandSummary[key].options[optionKey].name}}`, `${commandSummary[key].options[optionKey].description}
-                    Required: ${commandSummary[key].options[optionKey].required? 'Yes':'No'}`, true);
+                    if(commandSummary[key].options[optionKey].isSubcommand){
+                        if(commandSummary[key].options[optionKey].subcommandOptions) //True if option is a subcommand Group or subcommand with options
+                        {
+                            Object.keys(commandSummary[key].options[optionKey].subcommandOptions).forEach(subCommandOptKey =>{
+                                if(commandSummary[key].options[optionKey].subcommandOptions[subCommandOptKey].isSubcommand){
+                                    embed.addField(`/${commandSummary[key].name} ${commandSummary[key].options[optionKey].name} ${commandSummary[key].options[optionKey].subcommandOptions[subCommandOptKey].name}`,
+                                    commandSummary[key].options[optionKey].subcommandOptions[subCommandOptKey].description, true);
+                                }
+                                else{
+                                    embed.addField(`Option: {${commandSummary[key].options[optionKey].subcommandOptions[subCommandOptKey].name}}`,
+                                    `${commandSummary[key].options[optionKey].subcommandOptions[subCommandOptKey].description}
+                                    Required: ${commandSummary[key].options[optionKey].subcommandOptions[subCommandOptKey].required? 'Yes':'No'}`, true);
+                                } 
+                            })
+                        }
+                    }
+                    else{
+                        embed.addField(`Option: {${commandSummary[key].options[optionKey].name}}`, `${commandSummary[key].options[optionKey].description}
+                        Required: ${commandSummary[key].options[optionKey].required? 'Yes':'No'}`, true);
+                    }
                 });
             }
             embed.addField("\u200B","\u200B", false)// Generates an empty line for spacing
@@ -63,7 +81,11 @@ class HelpCommand{
             optionSummary[option.name] = {
                 name: option.name,
                 description: option.description,
-                required: option.required
+                isSubcommand: (option.required == undefined),
+                required: option.required   
+            }
+            if(optionSummary[option.name].isSubcommand){
+                optionSummary[option.name].subcommandOptions = this.getOptionsSummary(option.options);
             }
         });
         return optionSummary;

@@ -25,9 +25,10 @@ class DiscordInteractionHandler{
     /**
      * @param {InteractionReplyOptions} message 
      */
-    async reply(message){
+    async reply(message, commandName){
         try{
             await this.#interaction.reply(message);
+            await this.followUp(`Thanks for using the /${commandName} command!`);
         }
         catch(err){
             await this.genericError(this.reply.name, err);

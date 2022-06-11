@@ -54,7 +54,7 @@ class ProductsCommand {
 
             embed = await this.getProductEmbed(productName,product);           
         }
-        await interaction.reply(embed);
+        await interaction.reply(embed,"products");
     }
 }
 

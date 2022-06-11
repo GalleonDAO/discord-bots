@@ -1,4 +1,5 @@
 const { LOG_SEVERITY } = require('../services/azureLoggingService');
+const emoji = "<a:dancing_crab:960471758954192907>";
 /**
  * @typedef { Interaction, InteractionReplyOptions } = require("discord.js");
  */
@@ -28,7 +29,8 @@ class DiscordInteractionHandler{
     async reply(message, commandName){
         try{
             await this.#interaction.reply(message);
-            await this.followUp(`Thanks for using the /${commandName} command!`);
+            await this.followUp(
+                `Another sailor armed with the /${commandName} command!\r\n${emoji} Time to fetch more powder ${emoji}.`);
         }
         catch(err){
             await this.genericError(this.reply.name, err);

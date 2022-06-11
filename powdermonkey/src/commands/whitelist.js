@@ -32,7 +32,7 @@ class WhitelistCommand {
             whitelistConfig.icon,
             whitelistConfig.url);
 
-        await interaction.reply(embed);
+        await interaction.reply(embed, "whitelist");
     }
 }
 

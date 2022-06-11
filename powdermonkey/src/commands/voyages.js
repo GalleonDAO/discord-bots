@@ -48,7 +48,7 @@ class VoyagesCommand {
             embed = this.embedBuilder.createSingleSubjectEmbed(voyage.name, voyage.description, voyage.icon,voyage.url);
         }
 
-        await interaction.reply(embed);
+        await interaction.reply(embed, "voyages");
     }
 }
 

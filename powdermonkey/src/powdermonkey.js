@@ -30,6 +30,12 @@ client.login(DISCORD_API_TOKEN)
 client.once('ready', () => {
     console.log(`Bot successfully started as ${client.user.tag} 🤖`);
     registerCommands();
+	if (client.user) {
+		client.user.setActivity(
+			"/help", {
+			type: 'PLAYING'
+		});
+	}
 })
 
 client.on('interactionCreate', async interaction => {

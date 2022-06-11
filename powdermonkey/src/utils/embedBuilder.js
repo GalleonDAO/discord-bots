@@ -8,8 +8,9 @@ class EmbedBuilder{
      * @param {string} description Description of the embed
      * @param {string} thumbnail filename of the thumbnail in the /assets/logos/ directory
      * @param {string} url Url of the parent page
+     * @param {Object} fields optional fields to add
      */
-    createSingleSubjectEmbed(title, description, thumbnail, url) {
+    createSingleSubjectEmbed(title, description, thumbnail, url, fields, inline=true) {
 
         const filePath = path.join('src/assets/logos/',thumbnail);
         const file = new MessageAttachment(filePath);
@@ -19,14 +20,19 @@ class EmbedBuilder{
                 .setLabel('Link')
                 .setStyle('LINK')
                 .setURL(url));
-
-        return{ 
-            embeds: [new MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle(title)
             .setThumbnail(`attachment://${thumbnail}`)
             .setDescription(description)
             .setColor('#040728')
-            .setURL(url)],
+            .setURL(url);
+        if(fields){
+            Object.keys(fields).forEach(key => 
+                embed.addField(key, fields[key],inline));
+        }
+
+        return{ 
+            embeds: [embed],
             components: [actionRow],
             files: [file],
             ephemeral: true

@@ -10,6 +10,7 @@ const { RoleplayCommand } = require('../commands/roleplay');
 const { LogWrapper } = require('../utils/logWrapper');
 const dotenv = require('dotenv');
 const appsettings = require('../configuration/appsettings.json');
+const { PriceService } = require('./PriceService');
 
 class ServiceContainer{
     #services = {};
@@ -40,6 +41,8 @@ class ServiceContainer{
     }
 
     #registerServices(){
+        this.#addLogging();
+
         this.#services['linksRepository']      = new JsonRepository('../configuration/links.json');
         this.#services['productsRepository']   = new JsonRepository('../configuration/products.json');
         this.#services['voyagesRepository']    = new JsonRepository('../configuration/voyages.json');
@@ -48,14 +51,13 @@ class ServiceContainer{
         this.#services['whitelistRepository']  = new JsonRepository('../configuration/whitelist.json');
         this.#services['glossaryRepository']   = new JsonRepository('../configuration/glossary.json');
         this.#services['embedBuilder']         = new EmbedBuilder();
-
-        this.#addLogging();
+        this.#services['priceService']         = new PriceService(this.#services['logger']);
     }
 
     #registerCommands(){
         try{
             this.#commands['links']      = new LinksCommand(this.#services['linksRepository'],this.#services['embedBuilder']);
-            this.#commands['products']   = new ProductsCommand(this.#services['productsRepository'],this.#services['embedBuilder']);
+            this.#commands['products']   = new ProductsCommand(this.#services['productsRepository'],this.#services['embedBuilder'], this.#services['priceService']);
             this.#commands['voyages']    = new VoyagesCommand(this.#services['voyagesRepository'],this.#services['embedBuilder']);
             this.#commands['contribute'] = new ContributeCommand(this.#services['contributeRepository'],this.#services['embedBuilder']);
             this.#commands['shanties']   = new ShantiesCommand(this.#services['shantiesRepository'],this.#services['embedBuilder']);

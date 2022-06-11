@@ -92,7 +92,7 @@ class HelpCommand{
     }
 
     async execute(interaction){
-        await interaction.reply(this.#helpEmbed, "Help");
+        await interaction.reply(this.#helpEmbed, "help");
     }
 }
 

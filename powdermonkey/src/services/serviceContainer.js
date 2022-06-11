@@ -11,6 +11,7 @@ const { LogWrapper } = require('../utils/logWrapper');
 const dotenv = require('dotenv');
 const appsettings = require('../configuration/appsettings.json');
 const { PriceService } = require('./PriceService');
+const { HelpCommand } = require('../commands/help');
 
 class ServiceContainer{
     #services = {};
@@ -69,6 +70,17 @@ class ServiceContainer{
             throw new Error('Ensure all required services are configured before initialising commands')
         }
     }
+
+    /**
+     * Adds A help command to the service collection 
+     * @param {import('discord.js').Collection} commandsCollection commands to Describe
+     */
+    configureHelpCommand(commandsCollection){
+        this.#commands['help'] = new HelpCommand(commandsCollection);
+        commandsCollection.set(this.#commands['help'].data.name, this.#commands['help']);
+        return commandsCollection;
+    }
+
 
     getService(serviceName){
         return this.#services[serviceName];    

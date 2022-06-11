@@ -24,6 +24,8 @@ for (const key of serviceContainer.getCommandsList()){
 	client.commands.set(command.data.name, command);
 }
 
+client.commands = serviceContainer.configureHelpCommand(client.commands);
+
 client.login(DISCORD_API_TOKEN)
 client.once('ready', () => {
     console.log(`Bot successfully started as ${client.user.tag} 🤖`);

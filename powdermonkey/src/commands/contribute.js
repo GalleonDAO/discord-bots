@@ -32,7 +32,7 @@ class ContributeCommand {
             contributeConfig.icon,
             contributeConfig.url);
 
-        await interaction.reply(embed);
+        await interaction.reply(embed,"contribute");
     }
 }
 

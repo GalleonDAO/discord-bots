@@ -9,6 +9,10 @@
                 "url": "https://app.galleon.community/dbl"
             },
             {
+                "label": "Read Documentation",
+                "url": "https://www.notion.so/galleon/Doubloon-Token-09d3b9ca2b7a421980e6c5b98beeabac"
+            },
+            {
                 "label": "View on Coingecko",
                 "url": "https://www.coingecko.com/en/coins/doubloon"
             },
@@ -21,12 +25,15 @@
     "ethmaxy": {
         "name": "ETH Max Yield Index (ETHMAXY)",
         "description": "ETHMAXY is the best leveraged $ETH liquid staking strategy in DeFi today, all within one tradable ERC20 token.",
-        "url": "https://app.galleon.community/ethmaxy",
         "icon": "ethmaxy.png",
         "actions": [
             {
                 "label": "Trade on Galleon",
                 "url": "https://app.galleon.community/ethmaxy"
+            },
+            {
+                "label": "Read Documentation",
+                "url": "https://www.notion.so/galleon/The-ETH-Max-Yield-Index-2793239a6b314f3a83112d01df86d679"
             },
             {
                 "label": "View on Coingecko",
@@ -35,6 +42,33 @@
             {
                 "label": "View on TokenSets",
                 "url": "https://www.tokensets.com/portfolio/ethmaxy"
+            }
+        ]
+    },
+    "bye": {
+        "name": "Basis Yield ETH Index (BYE)",
+        "description": "BYE is the best Basis Yield $ETH Index strategy in DeFi today, all within one tradable ERC20 token.",
+        "icon": "ethmaxy.png",
+        "actions": [
+            {
+                "label": "Trade on Galleon",
+                "url": "https://app.galleon.community/bye"
+            },
+            {
+                "label": "Read Documentation",
+                "url": "https://www.notion.so/galleon/The-Basis-Yield-ETH-Index-7e384ce4e21d4ea19898c19ccc36af61"
+            },
+            {
+                "label": "View on Coingecko",
+                "url": "https://www.coingecko.com/en/coins/basis-yield-eth-index"
+            },
+            {
+                "label": "View on TokenSets",
+                "url": "https://www.tokensets.com/v2/set/optimism/0x927Eb0dBC5c3FD172Fdfa72D563f71612eCB6122"
+            },
+            {
+                "label": "Trade on Uniswap",
+                "url": "https://app.uniswap.org/#/swap?outputCurrency=0x927Eb0dBC5c3FD172Fdfa72D563f71612eCB6122&chain=optimism"
             }
         ]
     }

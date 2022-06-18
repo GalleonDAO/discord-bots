@@ -13,7 +13,8 @@ class PriceService{
         this.#logger = logger;
         this.KNOWN_TOKENS = {
             dbl : "doubloon",
-            ethmaxy : "eth-max-yield-index"
+            ethmaxy : "eth-max-yield-index",
+            bye: "basis-yield-eth-index"
         }
     }
 

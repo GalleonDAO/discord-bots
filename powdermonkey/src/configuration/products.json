@@ -2,13 +2,40 @@
     "dbl": {
         "name": "Doubloon (DBL)",
         "description": "Doubloon is the Arbitrum native governance token for Galleon",
-        "url": "https://app.galleon.community/dbl",
-        "icon": "dbl.png" 
+        "icon": "dbl.png",
+        "actions": [
+            {
+                "label": "Trade on Galleon",
+                "url": "https://app.galleon.community/dbl"
+            },
+            {
+                "label": "View on Coingecko",
+                "url": "https://www.coingecko.com/en/coins/doubloon"
+            },
+            {
+                "label": "Stake on Token Terminal",
+                "url": "https://app.xtokenterminal.io/mining/pools/arbitrum/0x7CC778c9b8fB55Bb874D0EaEf0751ff465f80498"
+            }
+        ] 
     },
     "ethmaxy": {
         "name": "ETH Max Yield Index (ETHMAXY)",
         "description": "ETHMAXY is the best leveraged $ETH liquid staking strategy in DeFi today, all within one tradable ERC20 token.",
         "url": "https://app.galleon.community/ethmaxy",
-        "icon": "ethmaxy.png"
+        "icon": "ethmaxy.png",
+        "actions": [
+            {
+                "label": "Trade on Galleon",
+                "url": "https://app.galleon.community/ethmaxy"
+            },
+            {
+                "label": "View on Coingecko",
+                "url": "https://www.coingecko.com/en/coins/eth-max-yield-index"
+            },
+            {
+                "label": "View on TokenSets",
+                "url": "https://www.tokensets.com/portfolio/ethmaxy"
+            }
+        ]
     }
 }

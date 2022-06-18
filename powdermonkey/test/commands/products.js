@@ -12,8 +12,21 @@ const productsRepositoryMock = {
         return {
             name: "Doubloon",
             description: "Doubloon is the Arbitrum native governance token for Galleon",
-            url: "https://app.galleon.community/dbl",
-            icon: "dbl.png"
+            icon: "dbl.png",
+            actions: [
+                {
+                    "label": "Trade on Galleon",
+                    "url": "https://app.galleon.community/dbl"
+                },
+                {
+                    "label": "View on Coingecko",
+                    "url": "https://www.coingecko.com/en/coins/doubloon"
+                },
+                {
+                    "label": "Stake on Token Terminal",
+                    "url": "https://app.xtokenterminal.io/mining/pools/arbitrum/0x7CC778c9b8fB55Bb874D0EaEf0751ff465f80498"
+                }
+            ] 
         }
     },
     readAll(){
@@ -21,14 +34,40 @@ const productsRepositoryMock = {
             dbl: {
                 "name": "Doubloon",
                 "description": "Doubloon is the Arbitrum native governance token for Galleon",
-                "url": "https://app.galleon.community/dbl",
-                "icon": "dbl.png" 
+                "icon": "dbl.png",
+                "actions": [
+                    {
+                        "label": "Trade on Galleon",
+                        "url": "https://app.galleon.community/dbl"
+                    },
+                    {
+                        "label": "View on Coingecko",
+                        "url": "https://www.coingecko.com/en/coins/doubloon"
+                    },
+                    {
+                        "label": "Stake on Token Terminal",
+                        "url": "https://app.xtokenterminal.io/mining/pools/arbitrum/0x7CC778c9b8fB55Bb874D0EaEf0751ff465f80498"
+                    }
+                ] 
             },
             ethmaxy: {
                 "name": "ETHMAXY",
                 "description": "ETHMAXY is the best leveraged $ETH liquid staking strategy in DeFi today, all within one tradable ERC20 token.",
-                "url": "https://app.galleon.community/ethmaxy",
-                "icon": "ethmaxy.png"
+                "icon": "ethmaxy.png",
+                "actions": [
+                    {
+                        "label": "Trade on Galleon",
+                        "url": "https://app.galleon.community/ethmaxy"
+                    },
+                    {
+                        "label": "View on Coingecko",
+                        "url": "https://www.coingecko.com/en/coins/eth-max-yield-index"
+                    },
+                    {
+                        "label": "View on TokenSets",
+                        "url": "https://www.tokensets.com/portfolio/ethmaxy"
+                    }
+                ]
             }
         }
     }
@@ -45,8 +84,8 @@ describe("Products Command", function() {
                 title: expectedProduct.name,
                 description: expectedProduct.description,
                 thumbnail: expectedProduct.icon,
-                url: expectedProduct.url,
-                fields: {Price: '$100', Change: '5%'}
+                fields: {Price: '$100', Change: '5%'},
+                actions: expectedProduct.actions
            };
             const expectedRequestedName = 'product';
             const expectedReply = "embed";
@@ -92,10 +131,12 @@ describe("Products Command", function() {
             title: 'Products',
             description: 'Here are all Current Products',
             thumbnail: 'products.png',
-            fields: productsRepositoryMock.readAll()
+            fields: productsRepositoryMock.readAll(),
+            embed: "embed",
+            note: "Try /products {service} for more information on a single product"
            };
            const expectedRequestedName = 'product';
-           const expectedReply = "embed";
+           const expectedReply = {embeds:['embed','note']};
            const embedBuilderMock = new EmbedBuilderMock();
 
            const subject = new ProductsCommand(productsRepositoryMock, embedBuilderMock);
@@ -114,7 +155,7 @@ describe("Products Command", function() {
 
            expect(embedBuilderMock.outputs).to.deep.equal(expectedEmbedOutputs);
            expect(outputs.requestedName).equal(expectedRequestedName);
-           expect(outputs.reply).equal(expectedReply);
+           expect(outputs.reply).to.deep.equal(expectedReply);
        })
     });
     describe("getProductEmbed()", function(){

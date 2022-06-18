@@ -1,0 +1,34 @@
+name: PullRequest
+
+on:
+  pull_request:
+    branches:
+      - main
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install powdermonkey Dependencies
+        run: npm install -D
+        working-directory: ./powdermonkey
+      - name: Run Powdermonkey tests
+        run: npm test
+        working-directory: ./powdermonkey
+
+      - name: Install Pricebot Dependencies
+        run: npm install -D
+        working-directory: ./pricebots
+      - name: Run Pricebot tests
+        run: npm test
+        working-directory: ./pricebots

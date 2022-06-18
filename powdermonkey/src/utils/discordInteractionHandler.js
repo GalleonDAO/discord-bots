@@ -24,7 +24,7 @@ class DiscordInteractionHandler{
     }
 
     /**
-     * @param {InteractionReplyOptions} message 
+     * @param {import('discord.js').InteractionReplyOptions } message 
      */
     async reply(message, commandName){
         try{
@@ -38,7 +38,7 @@ class DiscordInteractionHandler{
     }
 
     /**
-     * @param {InteractionReplyOptions} message 
+     * @param {import('discord.js').InteractionReplyOptions } message 
      */
     async followUp(message){
         try{

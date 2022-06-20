@@ -11,7 +11,7 @@ const {
 const { ADMIN_ROLES, DEBUG_ADMIN_ROLES } = require("./configuration/roles");
 const { AdminInteractionHandler } = require("./utils/adminInteractionHandler");
 
-const serviceContainer = new ServiceContainer();
+const serviceContainer = ServiceContainer.getInstance();
 
 const DISCORD_API_TOKEN =
   serviceContainer.getConfigurationOption("DISCORD_API_TOKEN");

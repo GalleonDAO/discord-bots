@@ -1,17 +1,24 @@
 const { LOG_SEVERITY } = require("../services/azureLoggingService");
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { ServiceContainer } = require("../services/serviceContainer");
 // const emoji = "<a:dancing_crab:960471758954192907>";
 
 const EMOJI_CODES = {
   CRAB: "<a:dancing_crab:960471758954192907>",
   GREEN_CHECK: "\u2705",
   NO_ENTRY: "\u26D4",
+  SCAM: "<:scam:953669381492195348>",
 };
 
 const BUTTON_STYLES = {
   SUCCESS: "SUCCESS",
   DANGER: "DANGER",
 };
+
+/**
+ * @type {import('./embedBuilder').EmbedBuilder}
+ */
+const embedBuilder = ServiceContainer.getInstance().getService("embedBuilder");
 
 /**
  * @typedef { Interaction, InteractionReplyOptions } = require("discord.js");
@@ -89,10 +96,17 @@ class AdminInteractionHandler {
               })
               .then(() => {
                 message.ephemeral = false;
+                message.fetchReply = true;
 
-                this.followUp(message).then(() => {
+                this.#interaction.channel.send(message).then((reply) => {
                   this.followUp(
-                    `This information came from the /${commandName} command\r\n${EMOJI_CODES.CRAB} Try /help to see what else I can do ${EMOJI_CODES.CRAB}`
+                    embedBuilder.createMessageEmbed(
+                      `This information came from the /${commandName} command`,
+                      `${EMOJI_CODES.CRAB} Try /help to see what else I can do ${EMOJI_CODES.CRAB}`,
+                      null,
+                      false
+                    ),
+                    reply
                   );
                 });
               });
@@ -117,9 +131,10 @@ class AdminInteractionHandler {
   /**
    * @param {import('discord.js').InteractionReplyOptions } message
    */
-  async followUp(message) {
+  async followUp(message, parent) {
     try {
-      await this.#interaction.followUp(message);
+      if (parent) await parent.reply(message);
+      else this.#interaction.followUp(message);
     } catch (err) {
       await this.genericError(this.followUp.name, err);
     }

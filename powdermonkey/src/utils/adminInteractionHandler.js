@@ -112,41 +112,6 @@ class AdminInteractionHandler {
       .catch((err) => {
         this.genericError(this.reply.name, err);
       });
-
-    // isPublicPrompt
-    //   .react(EMOJI_CODES.GREEN_CHECK)
-    //   .then(() => isPublicPrompt.react(EMOJI_CODES.NO_ENTRY));
-
-    // isPublicPrompt
-    //   .awaitReactions({
-    //     filter: (reaction, user) => {
-    //       return (
-    //         [EMOJI_CODES.GREEN_CHECK, EMOJI_CODES.NO_ENTRY].includes(
-    //           reaction.emoji.name
-    //         ) && user.id === this.#interaction.user.id
-    //       );
-    //     },
-    //     max: 1,
-    //     time: 1000,
-    //     errors: ["time"],
-    //   })
-    //   .then((collected) => {
-    //     const reaction = collected.first();
-
-    //     if (reaction.emoji.name === EMOJI_CODES.GREEN_CHECK) {
-    //       message.ephemeral = false;
-    //       this.followUp(message).then(() => {
-    //         `This information came from the /${commandName} command\r\n${EMOJI_CODES.CRAB} Try /help to see what else I can do ${EMOJI_CODES.CRAB}`;
-    //       });
-    //     } else {
-    //       this.followUp(message).then(() => {
-    //         `Another sailor armed with the /${commandName} command!\r\n${EMOJI_CODES.CRAB} Time to fetch more powder ${EMOJI_CODES.CRAB}.`;
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     this.genericError(this.reply.name, err);
-    //   });
   }
 
   /**

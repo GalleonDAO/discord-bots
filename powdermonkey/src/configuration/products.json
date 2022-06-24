@@ -47,7 +47,7 @@
     },
     "bye": {
         "name": "Basis Yield ETH Index (BYE)",
-        "description": "BYE is the best Basis Yield $ETH Index strategy in DeFi today, all within one tradable ERC20 token.",
+        "description": "BYE is an ERC20 composable structured product that executes a high yield, cash-and-carry delta-neutral strategy.",
         "icon": "ethmaxy.png",
         "actions": [
             {

@@ -3,13 +3,13 @@ const {
   fetchTokensetsData,
   tokensetsIsValid,
   fetchTokensetsChange,
-} = require('./helpers/utils')
+} = require('./services/tokenDataService')
 const {
   getNickname,
   getActivity,
   setDiscordText,
 } = require('./helpers/discordhelpers')
-const Client = require('discord.js')
+const { Client } = require('discord.js')
 const dotenv = require('dotenv')
 
 const COINGECKO_TOKENID = 'basis-yield-eth-index'

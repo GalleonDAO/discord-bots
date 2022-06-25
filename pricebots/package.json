@@ -7,6 +7,8 @@
     "dev:ethmaxy": "nodemon src/ethmaxy.js",
     "start:dbl": "node src/dbl.js",
     "dev:dbl": "nodemon src/dbl.js",
+    "start:bye": "node src/bye.js",
+    "dev:bye": "nodemon src/bye.js",
     "test": "mocha --recursive --reporter spec test"
   },
   "keywords": [

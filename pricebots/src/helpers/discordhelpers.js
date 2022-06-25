@@ -6,8 +6,10 @@ module.exports.getNickname = (price, change) => {
   }%`
 }
 
-module.exports.getActivity = (marketCap) => {
-  return `MC: ${marketCap ? numberWithCommas(marketCap) : '-'}`
+module.exports.getActivity = (marketCap, addSymbol = false) => {
+  return `MC: ${addSymbol ? '$' : ''}${
+    marketCap ? numberWithCommas(marketCap) : '-'
+  }`
 }
 
 module.exports.setDiscordText = (client, nickname, activity) => {

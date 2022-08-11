@@ -1,14 +1,38 @@
 {
-    "dbl": {
-        "name": "Doubloon (DBL)",
-        "description": "Doubloon is the Arbitrum native governance token for Galleon",
-        "url": "https://app.galleon.community/dbl",
-        "icon": "dbl.png" 
-    },
-    "ethmaxy": {
-        "name": "ETH Max Yield Index (ETHMAXY)",
-        "description": "ETHMAXY is the best leveraged $ETH liquid staking strategy in DeFi today, all within one tradable ERC20 token.",
-        "url": "https://app.galleon.community/ethmaxy",
-        "icon": "ethmaxy.png"
-    }
+  "dbl": {
+    "name": "Doubloon (DBL)",
+    "description": "Doubloon is the Arbitrum native governance token for Galleon",
+    "url": "https://app.galleon.community/dbl",
+    "icon": "dbl.png"
+  },
+  "ethmaxy": {
+    "name": "ETH Max Yield Index (ETHMAXY)",
+    "description": "ETHMAXY is the best leveraged $ETH liquid staking strategy in DeFi today, all within one tradable ERC20 token.",
+    "url": "https://app.galleon.community/ethmaxy",
+    "icon": "ethmaxy.png"
+  },
+  "spi": {
+    "name": "Spartan Index (SPI)",
+    "description": "The Spartan Index is part of Galleon's thematic Portfolios suite allowing holders of $SPI to capture the upside in the popular narrative surrounding the rise of synthetix ecosystem based projects on the growing Optimism Layer 2 network.",
+    "url": "https://app.galleon.community/spi",
+    "icon": "spi.png"
+  },
+  "fees": {
+    "name": "Crypto Fees Index (FEES)",
+    "description": "The Crypto Fees Index is part of Galleon's thematic Portfolios suite allowing holders of $FEES to capture the upside in the popular narrative surrounding investing in protocols and networks that are generating significant fees on a relative basis across the ecosystem.",
+    "url": "https://app.galleon.community/fees",
+    "icon": "fees.png"
+  },
+  "merge": {
+    "name": "Merge Index (MERGE)",
+    "description": "The Merge Index is part of Galleon's thematic Portfolios suite allowing holders of $MERGE to capture the upside in the highly anticipated event surrounding the upcoming merge on Ethereum, moving the entire network to Proof of Stake (PoS).",
+    "url": "https://app.galleon.community/merge",
+    "icon": "merge.png"
+  },
+  "vote": {
+    "name": "veToken Index (VOTE)",
+    "description": "The veToken Index is part of Galleon's thematic Portfolios suite allowing holders of $VOTE to capture the upside in the popular narrative surrounding the rise of voting escrow tokens that direct emissions within the decentralized finance (DeFi) ecosystem.",
+    "url": "https://app.galleon.community/vote",
+    "icon": "vote.png"
+  }
 }

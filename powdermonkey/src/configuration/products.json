@@ -14,13 +14,13 @@
   "spi": {
     "name": "Spartan Index (SPI)",
     "description": "The Spartan Index is part of Galleon's thematic Portfolios suite allowing holders of $SPI to capture the upside in the popular narrative surrounding the rise of synthetix ecosystem based projects on the growing Optimism Layer 2 network.",
-    "url": "https://app.galleon.community/spi",
+    "url": "https://www.tokensets.com/v2/set/optimism/0xb83E89129Bc8090eEfe3b3805ab2a9cb12D3fa7E",
     "icon": "spi.png"
   },
   "fees": {
     "name": "Crypto Fees Index (FEES)",
     "description": "The Crypto Fees Index is part of Galleon's thematic Portfolios suite allowing holders of $FEES to capture the upside in the popular narrative surrounding investing in protocols and networks that are generating significant fees on a relative basis across the ecosystem.",
-    "url": "https://app.galleon.community/fees",
+    "url": "https://www.tokensets.com/v2/set/0xb9dfc3abb15916299eE4f51724063DcB0A1741d4",
     "icon": "fees.png"
   },
   "merge": {
@@ -32,7 +32,7 @@
   "vote": {
     "name": "veToken Index (VOTE)",
     "description": "The veToken Index is part of Galleon's thematic Portfolios suite allowing holders of $VOTE to capture the upside in the popular narrative surrounding the rise of voting escrow tokens that direct emissions within the decentralized finance (DeFi) ecosystem.",
-    "url": "https://app.galleon.community/vote",
+    "url": "https://www.tokensets.com/v2/set/0x4f3e7f98aa70a3b879101b23b46db1c422f85f52",
     "icon": "vote.png"
   }
 }

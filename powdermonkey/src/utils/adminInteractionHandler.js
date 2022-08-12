@@ -1,11 +1,24 @@
 const { LOG_SEVERITY } = require("../services/azureLoggingService");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const { ServiceContainer } = require("../services/serviceContainer");
+// const emoji = "<a:dancing_crab:960471758954192907>";
+
+const EMOJI_CODES = {
+  CRAB: "<a:dancing_crab:960471758954192907>",
+  GREEN_CHECK: "\u2705",
+  NO_ENTRY: "\u26D4",
+  SCAM: "<:scam:953669381492195348>",
+};
+
+const BUTTON_STYLES = {
+  SUCCESS: "SUCCESS",
+  DANGER: "DANGER",
+};
 
 /**
  * @type {import('./embedBuilder').EmbedBuilder}
  */
 const embedBuilder = ServiceContainer.getInstance().getService("embedBuilder");
-const emoji = "<a:dancing_crab:960471758954192907>";
 
 /**
  * @typedef { Interaction, InteractionReplyOptions } = require("discord.js");
@@ -15,7 +28,7 @@ const emoji = "<a:dancing_crab:960471758954192907>";
  * This Handler is used for global error handling and decoration of discord interactions
  * Making the interaction private prevents bypassing global acitons
  */
-class DiscordInteractionHandler {
+class AdminInteractionHandler {
   #interaction;
   #logger;
 
@@ -30,24 +43,89 @@ class DiscordInteractionHandler {
     this.#logger = logger;
   }
 
+  #getIsPublicMessageEmbed() {
+    const embed = new MessageEmbed().setTitle("Make this response Public?");
+    const actionRow = new MessageActionRow().addComponents([
+      new MessageButton()
+        .setLabel("Public")
+        .setCustomId("public")
+        .setEmoji(EMOJI_CODES.GREEN_CHECK)
+        .setStyle(BUTTON_STYLES.SUCCESS),
+      new MessageButton()
+        .setLabel("Private")
+        .setCustomId("private")
+        .setEmoji(EMOJI_CODES.NO_ENTRY)
+        .setStyle(BUTTON_STYLES.DANGER),
+    ]);
+
+    return {
+      embeds: [embed],
+      components: [actionRow],
+      ephemeral: true,
+    };
+  }
+
   /**
    * @param {import('discord.js').InteractionReplyOptions } message
    */
   async reply(message, commandName) {
     this.#interaction
-      .reply(message)
-      .then(() =>
-        this.send(
-          embedBuilder.createMessageEmbed(
-            `Another sailor armed with the /${commandName} command!`,
-            `${emoji} Time to fetch more powder ${emoji}.`,
-            "monkey.png",
-            false
-          ),
-          this.#interaction.channel
-        )
-      )
-      .catch((err) => this.genericError(this.reply.name, err));
+      .reply(this.#getIsPublicMessageEmbed())
+      .then(() => {
+        const collector =
+          this.#interaction.channel.createMessageComponentCollector({
+            filter: (buttonClick) => {
+              return (
+                (buttonClick.customId === "public" &&
+                  buttonClick.user.id === this.#interaction.user.id) ||
+                (buttonClick.customId === "private" &&
+                  buttonClick.user.id === this.#interaction.user.id)
+              );
+            },
+            time: 5000,
+            max: 1,
+          });
+
+        collector.on("collect", async (click) => {
+          if (click.customId === "public") {
+            click
+              .update({
+                content: "Making response public!",
+                components: [],
+                embeds: [],
+              })
+              .then(() => {
+                message.ephemeral = false;
+                message.fetchReply = true;
+
+                this.#interaction.channel.send(message).then((reply) => {
+                  this.followUp(
+                    embedBuilder.createMessageEmbed(
+                      `This information came from the /${commandName} command`,
+                      `${EMOJI_CODES.CRAB} Try /help to see what else I can do ${EMOJI_CODES.CRAB}`,
+                      null,
+                      false
+                    ),
+                    reply
+                  );
+                });
+              });
+          } else {
+            click
+              .update({
+                content: "Making response private!",
+                components: [],
+                embeds: [],
+              })
+              .then(() => {
+                this.followUp(message);
+              });
+          }
+        });
+      })
+      .catch((err) => {
+        this.genericError(this.reply.name, err);
+      });
   }
 
   /**
@@ -56,18 +134,7 @@ class DiscordInteractionHandler {
   async followUp(message, parent) {
     try {
       if (parent) await parent.reply(message);
-      else await this.#interaction.followUp(message);
-    } catch (err) {
-      await this.genericError(this.followUp.name, err);
-    }
-  }
-
-  /**
-   * @param {import('discord.js').InteractionReplyOptions } message
-   */
-  async send(message, channel) {
-    try {
-      await channel.send(message);
+      else this.#interaction.followUp(message);
     } catch (err) {
       await this.genericError(this.followUp.name, err);
     }
@@ -160,5 +227,5 @@ class DiscordInteractionHandler {
 }
 
 module.exports = {
-  DiscordInteractionHandler,
+  AdminInteractionHandler,
 };

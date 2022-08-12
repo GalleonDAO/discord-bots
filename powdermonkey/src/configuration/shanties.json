@@ -28,5 +28,45 @@
             "Spotify": "https://open.spotify.com/track/2H0RTZvOwdFcpf8GWattYH",
             "Youtube": "https://www.youtube.com/watch?v=IX0r4H2i9uY"
         }
+    },
+    "leaveherjohnny": {
+        "name": "Leave Her Johnny",
+        "artist": "Michiel Schrey, Nils Brown, Sean Dagher",
+        "description": "A mellow shanty that will stick in your head for days on end",
+        "icon": "crown.png",
+        "links": {
+            "Spotify": "https://open.spotify.com/track/2vaa0nnDnNTlxCh7fCmjsr",
+            "Youtube": "https://www.youtube.com/watch?v=Cko3xXovB5E"
+        }
+    },
+    "spanishlades": {
+        "name": "Spanish Ladies",
+        "artist": "Jerry Bryant, Starboard Mess",
+        "description": "A naval classic, join the chorus and below your love for the Spanish Ladies",
+        "icon": "crown.png",
+        "links": {
+            "Spotify": "https://open.spotify.com/track/3XDGPQQGrW8sPstEqket1J",
+            "Youtube": "https://www.youtube.com/watch?v=3-FqDoK9aQk"
+        }
+    },
+    "hesapirate": {
+        "name": "He's a Pirate",
+        "artist": "Klaus Badelt",
+        "description": "The iconic PotC song, speakers to the max and try to discover why the rum is gone",
+        "icon": "crown.png",
+        "links": {
+            "Spotify": "https://open.spotify.com/track/4AD2dterIUjNt1LFNI9Bvi",
+            "Youtube": "https://youtu.be/BuYf0taXoNw"
+        }
+    },
+    "potc": {
+        "name": "Pirates of the Caribbean",
+        "artist": "2CELLOS",
+        "description": "A Pirates of the Caribbean medley performed by the incredibly unique Cello players 2CELLOS. They've got to be the best Cellists I've ever seen...",
+        "icon": "crown.png",
+        "links": {
+            "Spotify": "https://open.spotify.com/track/5POfcpwLoeMuwXSjA5uQIq",
+            "Youtube": "https://youtu.be/Xj3gU3jACe8"
+        }
     }
 }

@@ -12,14 +12,14 @@ const {
 const { Client } = require('discord.js')
 const dotenv = require('dotenv')
 
-const COINGECKO_TOKENID = 'eth-max-yield-index'
-const TOKENSETS_TOKENID = 'ethmaxy'
+const COINGECKO_TOKENID = 'basis-yield-eth-index'
+const TOKENSETS_TOKENID = 'bye'
 
 dotenv.config()
 //Allow token to be supplied as DISCORD_API_TOKEN_ETHMAXY or DISCORD_API_TOKEN for ease of use
-const DISCORD_API_TOKEN = !process.env.DISCORD_API_TOKEN_ETHMAXY
+const DISCORD_API_TOKEN = !process.env.DISCORD_API_TOKEN_BYE
   ? process.env.DISCORD_API_TOKEN
-  : process.env.DISCORD_API_TOKEN_ETHMAXY
+  : process.env.DISCORD_API_TOKEN_BYE
 
 let client = new Client()
 client.login(DISCORD_API_TOKEN)

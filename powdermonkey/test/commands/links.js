@@ -3,6 +3,7 @@ const {
     it
 }            = require('mocha');
 const { LinksCommand } = require('../../src/commands/links');
+const { EmbedBuilderMock } = require('../embedBuilderMock');
 const expect = require('chai').expect;
 
 const linksRepositoryMock = {
@@ -33,27 +34,6 @@ const linksRepositoryMock = {
     }
 }
 
-const embedBuilderMock = {
-    outputs:{},
-
-    createSingleSubjectEmbed(title, description, thumbnail, url){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['url'] = url;
-
-        return 'embed';
-    },
-    createMultiSubjectEmbed(title, description, thumbnail, fields){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['fields'] = fields;
-
-        return 'embed';
-    }
-}
-
 describe("Links Command", function() {
     describe("execute()", function(){
         it("interaction has string Option -- Returns specific link",
@@ -69,6 +49,7 @@ describe("Links Command", function() {
            };
             const expectedRequestedName = 'service';
             const expectedReply = "embed";
+            const embedBuilderMock = new EmbedBuilderMock();
 
             const subject = new LinksCommand(linksRepositoryMock, embedBuilderMock);
 
@@ -100,6 +81,7 @@ describe("Links Command", function() {
            };
            const expectedRequestedName = 'service';
            const expectedReply = "embed";
+           const embedBuilderMock = new EmbedBuilderMock();
 
            const subject = new LinksCommand(linksRepositoryMock, embedBuilderMock);
 

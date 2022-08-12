@@ -1,17 +1,29 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+
 /**
- * @typedef {JsonRepository} = require('../services/jsonRepository');
- * @typedef {EmbedBuilder} = require('../utils/embedBuilder');
+ * @typedef {Object} Product
+ * @property {string} name
+ * @property {string} description
+ * @property {string} icon
+ * @property {ActionProps[]} actions
+ */
+
+/**
+ * @typedef {Object} ActionProps
+ * @property {string} label
+ * @property {string} url
  */
 
 class ProductsCommand {
     /**
-     * @param {JsonRepository} productsRepository data title Title of the embed
-     * @param {EmbedBuilder} embedBuilder Description of the embed
+     * @param {import('../services/jsonRepository').JsonRepository} productsRepository data source
+     * @param {import('../utils/embedBuilder').EmbedBuilder} embedBuilder discord embed builder
+     * @param {import('../services/PriceService').PriceService} priceService product price fetching service
      */
-    constructor(productsRepository, embedBuilder) {
+    constructor(productsRepository, embedBuilder, priceService) {
         this.productsRepository = productsRepository;
         this.embedBuilder = embedBuilder;
+        this.priceService = priceService;
         this.data = this.getCommandBuilder();
     }
 
@@ -32,6 +44,26 @@ class ProductsCommand {
             });
     }
 
+    /**
+     * 
+     * @param {string} productName 
+     * @param {Product} product 
+     * @returns 
+     */
+    async getProductEmbed(productName, product){
+        const priceData = await this.priceService.fetchCoingeckoData(this.priceService.KNOWN_TOKENS[productName]);
+        return this.embedBuilder.createMultiActionEmbed(product.name,
+            product.description, 
+            product.icon, 
+            { Price: `${priceData?.price? `$${priceData.price}`: 'unavailable'}`, Change: `${priceData?.change? `${priceData.change}%`: 'unavailable'}`},
+            product.actions); 
+    }
+
+    /**
+     * 
+     * @param {import('../utils/discordInteractionHandler').DiscordInteractionHandler} interaction 
+     * @returns 
+     */
     async execute(interaction){
         const productName = interaction.getStringChoice('product');
         var embed;
@@ -39,15 +71,16 @@ class ProductsCommand {
         if(!productName){
             const products = this.productsRepository.readAll();
             embed = this.embedBuilder.createMultiSubjectEmbed('Products', 'Here are all Current Products', 'products.png',products);
+            embed = this.embedBuilder.addNote(embed, "Try /products {service} for more information on a single product",);
         }
         else{
             const product = this.productsRepository.read(productName);
             if(!product)
                 return await interaction.choiceNotExistsError(productName);
-                           
-            embed = this.embedBuilder.createSingleSubjectEmbed(product.name, product.description, product.icon, product.url);
+
+            embed = await this.getProductEmbed(productName,product);           
         }
-        await interaction.reply(embed);
+        await interaction.reply(embed,"products");
     }
 }
 

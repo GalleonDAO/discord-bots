@@ -3,6 +3,7 @@ const {
     it
 }            = require('mocha');
 const { WhitelistCommand } = require('../../src/commands/whitelist');
+const { EmbedBuilderMock } = require('../embedBuilderMock');
 const expect = require('chai').expect;
 
 const whitelistRepositoryMock = {
@@ -22,28 +23,6 @@ const whitelistRepositoryMock = {
     }
 }
 
-const embedBuilderMock = {
-    outputs:{},
-
-    createSingleSubjectEmbed(title, description, thumbnail, url){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['url'] = url;
-
-        return 'embed';
-    },
-    createMultiSubjectEmbed(title, description, thumbnail, fields){
-        this.outputs['title'] = title;
-        this.outputs['description'] = description;
-        this.outputs['thumbnail'] = thumbnail;
-        this.outputs['fields'] = fields;
-
-        return 'embed';
-    }
-}
-
-
 describe("Whitelist Command", function() {
     describe("execute()", function(){
         it("interaction without string Option -- Returns whitelist page",
@@ -58,6 +37,7 @@ describe("Whitelist Command", function() {
             url: whitelistConfig.url
            };
            const expectedReply = "embed";
+           const embedBuilderMock = new EmbedBuilderMock();
 
            const subject = new WhitelistCommand(whitelistRepositoryMock, embedBuilderMock);
 

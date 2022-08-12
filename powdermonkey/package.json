@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/powdermonkey.js",
     "start": "node src/powdermonkey.js",
-    "test": "mocha --report spec"
+    "test": "mocha --recursive --reporter spec test"
   },
   "repository": {
     "type": "git",

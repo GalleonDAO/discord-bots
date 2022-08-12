@@ -89,7 +89,7 @@ class GlossarySubCommand {
                 return await interaction.commandNotExistsError(interaction.getSubcommand());
         }
 
-        await interaction.reply(embed);
+        await interaction.reply(embed, "roleplay glossary");
     }
 }
 

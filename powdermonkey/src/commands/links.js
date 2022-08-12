@@ -47,7 +47,7 @@ class LinksCommand{
                            
             embed = this.embedBuilder.createSingleSubjectEmbed(link.name, link.description, link.icon, link.url);
         }
-        await interaction.reply(embed);
+        await interaction.reply(embed, "links");
     }
 }
 

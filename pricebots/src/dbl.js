@@ -1,18 +1,22 @@
 const {
-  numberWithCommas,
-  fetchCoingeckoData,
-  coingeckoIsValid
-} = require('./helpers/utils')
+  getNickname,
+  getActivity,
+  setDiscordText,
+} = require('./helpers/discordhelpers')
 const {
-  Client
-} = require('discord.js')
+  fetchCoingeckoData,
+  coingeckoIsValid,
+} = require('./services/tokenDataService')
+const { Client } = require('discord.js')
 const dotenv = require('dotenv')
 
 const COINGECKO_TOKENID = 'doubloon'
 
 dotenv.config()
 //Allow token to be supplied as DISCORD_API_TOKEN_DBL or DISCORD_API_TOKEN for ease of use
-const DISCORD_API_TOKEN = !process.env.DISCORD_API_TOKEN_DBL ? process.env.DISCORD_API_TOKEN : process.env.DISCORD_API_TOKEN_DBL
+const DISCORD_API_TOKEN = !process.env.DISCORD_API_TOKEN_DBL
+  ? process.env.DISCORD_API_TOKEN
+  : process.env.DISCORD_API_TOKEN_DBL
 
 let client = new Client()
 client.login(DISCORD_API_TOKEN)
@@ -38,31 +42,12 @@ const updateBot = async () => {
   }
 
   if (coingeckoIsValid(coingeckoData)) {
-    const {
-      price,
-      symbol,
-      circSupply,
-      change
-    } = coingeckoData
+    const { price, symbol, circSupply, change } = coingeckoData
 
     console.log('Fetched: ' + symbol, price, circSupply)
+    const nickname = getNickname(price, change)
+    const activity = getActivity(Math.round(price * circSupply), true)
 
-    client.guilds.cache.forEach(async (guild) => {
-      const botMember = guild.me
-      await botMember.setNickname(
-        `${
-        price
-          ? '$' + numberWithCommas(price) + ' | ' + change.toFixed(2) + '%'
-          : ''
-      }`,
-      )
-    })
-    if (client.user) {
-      client.user.setActivity(
-        'MC: $' + numberWithCommas(Math.round(price * circSupply)), {
-          type: 'WATCHING'
-        },
-      )
-    }
+    setDiscordText(client, nickname, activity)
   }
 }
